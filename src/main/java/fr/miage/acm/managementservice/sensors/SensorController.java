@@ -1,3 +1,5 @@
+package fr.miage.acm.managementservice.sensors;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
