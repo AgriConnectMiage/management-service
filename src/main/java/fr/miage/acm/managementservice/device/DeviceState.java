@@ -1,5 +1,9 @@
 package fr.miage.acm.managementservice.device;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
 public enum DeviceState {
     NOT_ASSIGNED("not assigned"),
     OFF("off"),
@@ -9,9 +13,5 @@ public enum DeviceState {
 
     DeviceState(String state) {
         this.state = state;
-    }
-
-    public String getState() {
-        return state;
     }
 }

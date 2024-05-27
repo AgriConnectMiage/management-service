@@ -1,9 +1,14 @@
 package fr.miage.acm.managementservice.measurement;
 
 import fr.miage.acm.managementservice.device.Device;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.UUID;
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
 public class Measurement {
     private UUID id;
     private LocalDateTime dateTime;
@@ -20,62 +25,6 @@ public class Measurement {
         this.source = source;
         this.humidity = humidity;
         this.temperature = temperature;
-        this.duration = duration;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public LocalDateTime getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
-    }
-
-    public UUID getDeviceId() {
-        return deviceId;
-    }
-
-    public void setDeviceId(UUID deviceId) {
-        this.deviceId = deviceId;
-    }
-
-    public Device getSource() {
-        return source;
-    }
-
-    public void setSource(Device source) {
-        this.source = source;
-    }
-
-    public Float getHumidity() {
-        return humidity;
-    }
-
-    public void setHumidity(Float humidity) {
-        this.humidity = humidity;
-    }
-
-    public Float getTemperature() {
-        return temperature;
-    }
-
-    public void setTemperature(Float temperature) {
-        this.temperature = temperature;
-    }
-
-    public Float getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Float duration) {
         this.duration = duration;
     }
 }
