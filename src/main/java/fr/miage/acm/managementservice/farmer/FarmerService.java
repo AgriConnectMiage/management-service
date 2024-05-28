@@ -28,4 +28,15 @@ public class FarmerService {
     public void deleteById(UUID id) {
         farmerRepository.deleteById(id);
     }
+
+    public Optional<Farmer> updatePassword(UUID id, String newPassword) {
+        Optional<Farmer> farmerOptional = farmerRepository.findById(id);
+        if (farmerOptional.isPresent()) {
+            Farmer farmer = farmerOptional.get();
+            farmer.setPassword(newPassword);
+            farmerRepository.save(farmer);
+            return Optional.of(farmer);
+        }
+        return Optional.empty();
+    }
 }
