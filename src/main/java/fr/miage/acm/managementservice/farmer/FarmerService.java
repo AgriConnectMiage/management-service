@@ -53,7 +53,6 @@ public class FarmerService {
         return Optional.empty();
     }
 
-    // Add actuators
     public Optional<Farmer> addActuator(UUID id, Actuator actuator) {
         Optional<Farmer> farmerOptional = farmerRepository.findById(id);
         if (farmerOptional.isPresent()) {

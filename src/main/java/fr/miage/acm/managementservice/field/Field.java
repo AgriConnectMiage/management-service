@@ -3,7 +3,6 @@ package fr.miage.acm.managementservice.field;
 import fr.miage.acm.managementservice.device.actuator.Actuator;
 import fr.miage.acm.managementservice.device.sensor.Sensor;
 import fr.miage.acm.managementservice.farmer.Farmer;
-import fr.miage.acm.managementservice.util.Pair;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
@@ -24,9 +23,10 @@ public class Field {
     @GeneratedValue
     private UUID id;
 
-    private Pair<Integer, Integer> coordinates; // Using Pair for coordinates
+    private Integer xcoord;
+    private Integer ycoord;
 
-    @Relationship(type = "OWNED_BY", direction = Relationship.Direction.INCOMING)
+    @Relationship(type = "OWNED_BY", direction = Relationship.Direction.OUTGOING)
     private Farmer farmer;
 
     @Relationship(type = "HAS_SENSOR")
@@ -35,10 +35,22 @@ public class Field {
     @Relationship(type = "HAS_ACTUATOR")
     private Actuator actuator;
 
-    public Field(Pair<Integer, Integer> coordinates, Farmer farmer) {
-        this.coordinates = coordinates;
+    public Field(Integer xcoord, Integer ycoord, Farmer farmer) {
+        this.xcoord = xcoord;
+        this.ycoord = ycoord;
         this.farmer = farmer;
         this.sensors = new ArrayList<>();
         this.actuator = null;
+    }
+
+    // To String method
+    @Override
+    public String toString() {
+        return "Field{" +
+                "id=" + id +
+                ", xcoord=" + xcoord +
+                ", ycoord=" + ycoord +
+                ", farmer=" + farmer.getId() +
+                '}';
     }
 }

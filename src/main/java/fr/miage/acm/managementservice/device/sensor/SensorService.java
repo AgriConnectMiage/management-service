@@ -2,7 +2,6 @@ package fr.miage.acm.managementservice.device.sensor;
 
 import fr.miage.acm.managementservice.device.DeviceState;
 import fr.miage.acm.managementservice.field.Field;
-import fr.miage.acm.managementservice.farmer.Farmer;
 import fr.miage.acm.managementservice.field.FieldRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

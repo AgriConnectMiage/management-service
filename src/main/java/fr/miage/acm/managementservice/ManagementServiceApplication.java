@@ -19,15 +19,11 @@ public class ManagementServiceApplication {
 
         FarmerService farmerService = context.getBean(FarmerService.class);
 
-        Farmer farmer = new Farmer();
-        farmer.setId(UUID.randomUUID());
-        farmer.setFirstName("Paul");
-        farmer.setLastName("Doe");
-        farmer.setEmail("john.doe@example.com");
-        farmer.setPassword("securePassword123");
+//        Farmer farmer = new Farmer("Jean", "Dupont",
+//                "jean.dupont@gmail.com","password", 3);
+//
+//        farmerService.save(farmer);
 
-        farmerService.save(farmer);
-
-        System.out.println("Farmer créé avec succès: " + farmer.getId());
+        farmerService.findAll().forEach(System.out::println);
     }
 }

@@ -1,4 +1,4 @@
-package fr.miage.acm.managementservice.wateringevent;
+package fr.miage.acm.managementservice.device.actuator;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -21,5 +21,16 @@ public class WateringEvent {
         this.endDate = endDate;
         this.duration = duration;
         this.humidityThreshold = humidityThreshold;
+    }
+
+    @Override
+    public String toString() {
+        return "WateringEvent{" +
+                "id=" + id +
+                ", beginDate=" + beginDate +
+                ", endDate=" + endDate +
+                ", duration=" + duration +
+                ", humidityThreshold=" + humidityThreshold +
+                '}';
     }
 }
