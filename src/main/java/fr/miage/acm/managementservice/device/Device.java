@@ -1,6 +1,7 @@
 package fr.miage.acm.managementservice.device;
 
 import fr.miage.acm.managementservice.farmer.Farmer;
+import fr.miage.acm.managementservice.field.Field;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
@@ -25,9 +26,13 @@ public abstract class Device {
     @Relationship(type = "HAS_MEASUREMENT")
     private List<Measurement> measurements;
 
+    @Relationship(type = "ASSIGNED_TO")
+    private Field field;
+
     public Device(DeviceState state, Farmer farmer) {
         this.state = state;
         this.farmer = farmer;
+        this.field = null;
         this.measurements = new ArrayList<>();
     }
 }

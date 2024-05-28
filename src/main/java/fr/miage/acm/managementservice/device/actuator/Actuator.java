@@ -15,9 +15,9 @@ import java.util.Optional;
 public class Actuator extends Device {
     private Optional<WateringEvent> wateringEvent;
 
-    public Actuator(UUID id, DeviceState state, Farmer farmer, WateringEvent wateringEvent) {
+    public Actuator(UUID id, DeviceState state, Farmer farmer) {
         super(state, farmer);
-        this.wateringEvent = Optional.ofNullable(wateringEvent);
+        this.wateringEvent = Optional.empty();
     }
 
     @Override
