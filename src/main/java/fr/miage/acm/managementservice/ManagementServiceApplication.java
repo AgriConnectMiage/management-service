@@ -24,6 +24,5 @@ public class ManagementServiceApplication {
 //
 //        farmerService.save(farmer);
 
-        farmerService.findAll().forEach(System.out::println);
     }
 }
