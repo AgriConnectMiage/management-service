@@ -2,22 +2,23 @@ package fr.miage.acm.managementservice.device.actuator;
 
 import fr.miage.acm.managementservice.device.Device;
 import fr.miage.acm.managementservice.device.DeviceState;
-import fr.miage.acm.managementservice.farmer.Farmer;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.UUID;
+import org.springframework.data.neo4j.core.schema.Node;
+import org.springframework.data.neo4j.core.schema.Relationship;
 
 import java.util.Optional;
 
 @Getter
 @Setter
+@Node
 public class Actuator extends Device {
-    private Optional<WateringEvent> wateringEvent;
+    @Relationship(type = "HAS_WATERING_EVENT")
+    private WateringEvent wateringEvent;
 
-    public Actuator(UUID id, DeviceState state, Farmer farmer) {
-        super(state, farmer);
-        this.wateringEvent = Optional.empty();
+    public Actuator(DeviceState state) {
+        super(state);
+        this.wateringEvent = null;
     }
 
     @Override
@@ -25,7 +26,6 @@ public class Actuator extends Device {
         return "Actuator{" +
                 "id=" + getId() +
                 ", state=" + getState() +
-                ", farmer=" + getFarmer() +
                 ", wateringEvent=" + wateringEvent +
                 '}';
     }

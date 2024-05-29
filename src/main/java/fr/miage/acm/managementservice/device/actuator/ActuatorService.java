@@ -18,12 +18,16 @@ public class ActuatorService {
     @Autowired
     private FieldRepository fieldRepository;
 
-    public Actuator insertActuator(Actuator actuator) {
+    public Actuator save(Actuator actuator) {
         return actuatorRepository.save(actuator);
     }
 
-    public void deleteActuator(Actuator actuator) {
+    public void delete(Actuator actuator) {
         actuatorRepository.delete(actuator);
+    }
+
+    public Optional<Actuator> findById(UUID id) {
+        return actuatorRepository.findById(id);
     }
 
     public Optional<Actuator> assignActuatorToField(UUID actuatorId, UUID fieldId) {

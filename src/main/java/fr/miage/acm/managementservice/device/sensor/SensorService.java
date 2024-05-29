@@ -19,16 +19,18 @@ public class SensorService {
     @Autowired
     private FieldRepository fieldRepository;
 
-    // Method to insert a new sensor
     public Sensor insertSensor(Sensor sensor) {
         return sensorRepository.save(sensor);
     }
 
-    public void deleteSensor(Sensor sensor) {
+    public Optional<Sensor> findById(UUID id) {
+        return sensorRepository.findById(id);
+    }
+
+    public void delete(Sensor sensor) {
         sensorRepository.delete(sensor);
     }
 
-    // Method to assign a sensor to a field
     @Transactional
     public Optional<Sensor> assignSensorToField(UUID sensorId, UUID fieldId) {
         Optional<Sensor> sensorOptional = sensorRepository.findById(sensorId);
@@ -72,4 +74,7 @@ public class SensorService {
         }
         return Optional.empty();
     }
+
+    // Remove sensor
+
 }

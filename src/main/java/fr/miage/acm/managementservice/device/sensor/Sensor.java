@@ -11,11 +11,12 @@ import org.springframework.data.neo4j.core.schema.Node;
 @Setter
 @Node
 public class Sensor extends Device {
+    // Interval between two measurements in milliseconds
     private float interval;
 
-    public Sensor(DeviceState state, Farmer farmer, float interval) {
-        super(state, farmer);
-        this.interval = interval;
+    public Sensor(DeviceState state) {
+        super(state);
+        this.interval = 1000;
     }
 
     @Override
@@ -23,7 +24,6 @@ public class Sensor extends Device {
         return "Sensor{" +
                 "interval=" + interval +
                 ", state=" + getState() +
-                ", farmer=" + getFarmer() +
                 '}';
     }
 }

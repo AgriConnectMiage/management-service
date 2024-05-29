@@ -1,6 +1,5 @@
 package fr.miage.acm.managementservice.device;
 
-import fr.miage.acm.managementservice.farmer.Farmer;
 import fr.miage.acm.managementservice.field.Field;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,17 +21,14 @@ public abstract class Device {
     private UUID id;
     private DeviceState state;
 
-    private Farmer farmer;
-
     @Relationship(type = "HAS_MEASUREMENT")
     private List<Measurement> measurements;
 
     @Relationship(type = "ASSIGNED_TO")
     private Field field;
 
-    public Device(DeviceState state, Farmer farmer) {
+    public Device(DeviceState state) {
         this.state = state;
-        this.farmer = farmer;
         this.field = null;
         this.measurements = new ArrayList<>();
     }
