@@ -26,13 +26,13 @@ public class Farmer {
     private String password;
     private Integer fieldSize;
 
-    @OneToMany(mappedBy = "farmer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "farmer")
     private List<Field> fields;
 
-    @OneToMany(mappedBy = "farmer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "farmer")
     private List<Sensor> sensors;
 
-    @OneToMany(mappedBy = "farmer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "farmer")
     private List<Actuator> actuators;
 
     public Farmer(String firstName, String lastName, String email, String password, int fieldSize) {

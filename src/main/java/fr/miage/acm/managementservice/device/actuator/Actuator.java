@@ -2,7 +2,6 @@ package fr.miage.acm.managementservice.device.actuator;
 
 import fr.miage.acm.managementservice.device.Device;
 import fr.miage.acm.managementservice.device.DeviceState;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
@@ -14,7 +13,7 @@ import lombok.Setter;
 @Entity
 public class Actuator extends Device {
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "watering_event_id", referencedColumnName = "id")
     private WateringEvent wateringEvent;
 
