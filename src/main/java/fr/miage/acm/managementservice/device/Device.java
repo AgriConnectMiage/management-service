@@ -18,7 +18,6 @@ import java.util.UUID;
 @Node
 public abstract class Device {
     @Id
-    @GeneratedValue
     private UUID id;
     private DeviceState state;
     private Farmer farmer;

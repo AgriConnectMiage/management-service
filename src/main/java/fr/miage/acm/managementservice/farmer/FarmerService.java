@@ -2,6 +2,8 @@ package fr.miage.acm.managementservice.farmer;
 
 import fr.miage.acm.managementservice.device.actuator.Actuator;
 import fr.miage.acm.managementservice.device.sensor.Sensor;
+import fr.miage.acm.managementservice.field.FieldService;
+import fr.miage.acm.managementservice.field.Field;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +17,19 @@ public class FarmerService {
     @Autowired
     private FarmerRepository farmerRepository;
 
+    @Autowired
+    private FieldService fieldService;
+
     public List<Farmer> findAll() {
         return farmerRepository.findAll();
     }
 
     public Optional<Farmer> findById(UUID id) {
         return farmerRepository.findById(id);
+    }
+
+    public Farmer findByEmail(String email) {
+        return farmerRepository.findByEmail(email);
     }
 
     public Farmer save(Farmer farmer) {
@@ -31,15 +40,30 @@ public class FarmerService {
         farmerRepository.deleteById(id);
     }
 
-    public Optional<Farmer> updatePassword(UUID id, String newPassword) {
-        Optional<Farmer> farmerOptional = farmerRepository.findById(id);
-        if (farmerOptional.isPresent()) {
-            Farmer farmer = farmerOptional.get();
-            farmer.setPassword(newPassword);
-            farmerRepository.save(farmer);
-            return Optional.of(farmer);
+    public void delete(Farmer farmer) {
+        farmerRepository.delete(farmer);
+
+        // delete farmer's fields, sensors and actuators
+        for (int i = 0; i < farmer.getFieldSize(); i++) {
+            fieldService.delete(farmer.getFields().get(i));
         }
-        return Optional.empty();
+        for (int i = 0; i < farmer.getSensors().size(); i++) {
+            farmer.getSensors().remove(i);
+        }
+        for (int i = 0; i < farmer.getActuators().size(); i++) {
+            farmer.getActuators().remove(i);
+        }
+
+        // use for each loop to delete farmer's fields, sensors and actuators
+        for (Field field : farmer.getFields()) {
+            fieldService.delete(field);
+        }
+        for (Sensor sensor : farmer.getSensors()) {
+            farmer.getSensors().remove(sensor);}
+        for (Actuator actuator : farmer.getActuators()) {
+            farmer.getActuators().remove(actuator);
+        }
+
     }
 
     public Optional<Farmer> addSensor(UUID id, Sensor sensor) {

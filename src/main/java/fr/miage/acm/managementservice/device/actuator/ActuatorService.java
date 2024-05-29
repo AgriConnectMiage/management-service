@@ -22,6 +22,10 @@ public class ActuatorService {
         return actuatorRepository.save(actuator);
     }
 
+    public void deleteActuator(Actuator actuator) {
+        actuatorRepository.delete(actuator);
+    }
+
     public Optional<Actuator> assignActuatorToField(UUID actuatorId, UUID fieldId) {
         Optional<Actuator> actuatorOptional = actuatorRepository.findById(actuatorId);
         Optional<Field> fieldOptional = fieldRepository.findById(fieldId);

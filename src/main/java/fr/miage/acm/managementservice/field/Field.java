@@ -20,7 +20,6 @@ import java.util.UUID;
 public class Field {
 
     @Id
-    @GeneratedValue
     private UUID id;
 
     private Integer xcoord;

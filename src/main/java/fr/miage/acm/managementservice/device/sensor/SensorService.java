@@ -24,6 +24,10 @@ public class SensorService {
         return sensorRepository.save(sensor);
     }
 
+    public void deleteSensor(Sensor sensor) {
+        sensorRepository.delete(sensor);
+    }
+
     // Method to assign a sensor to a field
     @Transactional
     public Optional<Sensor> assignSensorToField(UUID sensorId, UUID fieldId) {

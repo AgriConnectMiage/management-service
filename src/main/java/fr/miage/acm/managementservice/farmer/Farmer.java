@@ -20,7 +20,6 @@ import java.util.UUID;
 public class Farmer {
 
     @Id
-    @GeneratedValue
     private UUID id;
 
     private String firstName;
@@ -47,15 +46,14 @@ public class Farmer {
         this.actuators = new ArrayList<>();
         this.fieldSize = fieldSize;
         this.fields = new ArrayList<>();
-        for(int x = 0; x <= fieldSize; x++) {
-            for(int y = 0; y <= fieldSize; y++) {
+        for(int x = 0; x < fieldSize; x++) {
+            for(int y = 0; y < fieldSize; y++) {
                 Field field = new Field(x+1, y+1, this);
                 fields.add(field);
             }
         }
     }
 
-    // To String method
     @Override
     public String toString() {
         return "Farmer{" +
