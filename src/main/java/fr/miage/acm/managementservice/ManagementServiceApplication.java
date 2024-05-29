@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ApplicationContext;
 
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+@SpringBootApplication
 @EnableFeignClients
 public class ManagementServiceApplication {
 
@@ -25,6 +25,6 @@ public class ManagementServiceApplication {
 //        farmerServiceTest.addSensor();
 //        farmerServiceTest.removeSensor();
 //        farmerServiceTest.removeActuator();
-         farmerServiceTest.assignActuatorToField();
+//         farmerServiceTest.assignActuatorToField();
     }
 }

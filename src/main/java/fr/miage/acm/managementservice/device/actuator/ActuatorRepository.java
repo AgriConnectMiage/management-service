@@ -1,8 +1,8 @@
 package fr.miage.acm.managementservice.device.actuator;
 
-import org.springframework.data.neo4j.repository.Neo4jRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
-public interface ActuatorRepository extends Neo4jRepository<Actuator, UUID> {
+public interface ActuatorRepository extends JpaRepository<Actuator, UUID> {
 }

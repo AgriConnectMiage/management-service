@@ -2,14 +2,13 @@ package fr.miage.acm.managementservice.device.sensor;
 
 import fr.miage.acm.managementservice.device.Device;
 import fr.miage.acm.managementservice.device.DeviceState;
-import fr.miage.acm.managementservice.farmer.Farmer;
+import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.neo4j.core.schema.Node;
 
 @Getter
 @Setter
-@Node
+@Entity
 public class Sensor extends Device {
     // Interval between two measurements in milliseconds
     private float interval;
@@ -17,6 +16,10 @@ public class Sensor extends Device {
     public Sensor(DeviceState state) {
         super(state);
         this.interval = 1000;
+    }
+
+    public Sensor() {
+        // Default constructor required by JPA
     }
 
     @Override

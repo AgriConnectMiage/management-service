@@ -1,7 +1,7 @@
 package fr.miage.acm.managementservice.field;
 
-import org.springframework.data.neo4j.repository.Neo4jRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.UUID;
 
-public interface FieldRepository extends Neo4jRepository<Field, UUID> {
+public interface FieldRepository extends JpaRepository<Field, UUID> {
 }

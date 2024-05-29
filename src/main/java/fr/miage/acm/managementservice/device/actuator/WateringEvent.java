@@ -1,20 +1,23 @@
 package fr.miage.acm.managementservice.device.actuator;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.ws.rs.container.PreMatching;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.neo4j.core.schema.GeneratedValue;
-import org.springframework.data.neo4j.core.schema.Id;
-import org.springframework.data.neo4j.core.schema.Node;
 
 import java.util.UUID;
 import java.sql.Timestamp;
 
 @Getter
 @Setter
-@Node
+@Entity
 public class WateringEvent {
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     private Timestamp beginDate;
     private Timestamp endDate;
@@ -26,6 +29,10 @@ public class WateringEvent {
         this.endDate = endDate;
         this.duration = duration;
         this.humidityThreshold = humidityThreshold;
+    }
+
+    public WateringEvent() {
+        // Default constructor required by JPA
     }
 
     @Override

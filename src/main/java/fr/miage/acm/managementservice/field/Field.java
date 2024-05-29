@@ -5,31 +5,33 @@ import fr.miage.acm.managementservice.device.sensor.Sensor;
 import fr.miage.acm.managementservice.farmer.Farmer;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.neo4j.core.schema.GeneratedValue;
-import org.springframework.data.neo4j.core.schema.Id;
-import org.springframework.data.neo4j.core.schema.Node;
-import org.springframework.data.neo4j.core.schema.Relationship;
 
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Getter
 @Setter
-@Node
+@Entity
 public class Field {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     private Integer xcoord;
     private Integer ycoord;
 
+    @ManyToOne
+    @JoinColumn(name = "farmer_id")
     private Farmer farmer;
 
+    @OneToMany(mappedBy = "field", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Sensor> sensors = new ArrayList<>();
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "actuator_id", referencedColumnName = "id")
     private Actuator actuator;
 
     public Field(Integer xcoord, Integer ycoord) {
@@ -39,7 +41,10 @@ public class Field {
         this.actuator = null;
     }
 
-    // To String method
+    public Field() {
+        // Default constructor required by JPA
+    }
+
     @Override
     public String toString() {
         return "Field{" +

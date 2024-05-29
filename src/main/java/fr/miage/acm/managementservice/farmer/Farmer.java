@@ -5,22 +5,19 @@ import fr.miage.acm.managementservice.device.sensor.Sensor;
 import fr.miage.acm.managementservice.field.Field;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.neo4j.core.schema.GeneratedValue;
-import org.springframework.data.neo4j.core.schema.Id;
-import org.springframework.data.neo4j.core.schema.Node;
-import org.springframework.data.neo4j.core.schema.Relationship;
 
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Getter
 @Setter
-@Node
+@Entity
 public class Farmer {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     private String firstName;
@@ -29,13 +26,13 @@ public class Farmer {
     private String password;
     private Integer fieldSize;
 
-    @Relationship(type = "HAS_FIELD")
+    @OneToMany(mappedBy = "farmer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Field> fields;
 
-    @Relationship(type = "HAS_SENSOR")
+    @OneToMany(mappedBy = "farmer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Sensor> sensors;
 
-    @Relationship(type = "HAS_ACTUATOR")
+    @OneToMany(mappedBy = "farmer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Actuator> actuators;
 
     public Farmer(String firstName, String lastName, String email, String password, int fieldSize) {
@@ -47,12 +44,17 @@ public class Farmer {
         this.actuators = new ArrayList<>();
         this.fieldSize = fieldSize;
         this.fields = new ArrayList<>();
-        for(int x = 0; x < fieldSize; x++) {
-            for(int y = 0; y < fieldSize; y++) {
-                Field field = new Field(x+1, y+1);
+        for (int x = 0; x < fieldSize; x++) {
+            for (int y = 0; y < fieldSize; y++) {
+                Field field = new Field(x + 1, y + 1);
+                field.setFarmer(this);
                 this.fields.add(field);
             }
         }
+    }
+
+    public Farmer() {
+        // Default constructor required by JPA
     }
 
     @Override
