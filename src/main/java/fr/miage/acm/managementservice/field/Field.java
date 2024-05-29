@@ -28,10 +28,8 @@ public class Field {
 
     private Farmer farmer;
 
-    @Relationship(type = "HAS_SENSOR")
     private List<Sensor> sensors = new ArrayList<>();
 
-    @Relationship(type = "HAS_ACTUATOR")
     private Actuator actuator;
 
     public Field(Integer xcoord, Integer ycoord) {
