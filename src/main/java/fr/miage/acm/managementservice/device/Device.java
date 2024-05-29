@@ -29,16 +29,16 @@ public abstract class Device {
     @ManyToOne
     @JoinColumn(name = "field_id")
     private Field field;
-
     @ManyToOne
     @JoinColumn(name = "farmer_id")
     private Farmer farmer;
 
-    public Device(DeviceState state) {
+
+    public Device(DeviceState state, Farmer farmer) {
         this.state = state;
         this.field = null;
         this.measurements = new ArrayList<>();
-        this.farmer = null;
+        this.farmer = farmer;
     }
 
     public Device() {

@@ -19,9 +19,9 @@ public class ManagementServiceApplication {
         FarmerServiceTest farmerServiceTest = context.getBean(FarmerServiceTest.class);
 
 //        farmerServiceTest.removeFarmers();
-        farmerServiceTest.createFarmers();
+//        farmerServiceTest.createFarmers();
 //        farmerServiceTest.editPassword();
-//        farmerServiceTest.addActuator();
+        farmerServiceTest.addActuator();
 //        farmerServiceTest.addSensor();
 //        farmerServiceTest.removeSensor();
 //        farmerServiceTest.removeActuator();

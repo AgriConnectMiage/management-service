@@ -95,20 +95,20 @@ public class FarmerService {
     }
 
     public void addActuator(UUID farmerId) {
-        Actuator actuator = new Actuator(DeviceState.NOT_ASSIGNED);
         Optional<Farmer> farmerOptional = farmerRepository.findById(farmerId);
         if (farmerOptional.isPresent()) {
             Farmer farmer = farmerOptional.get();
+            Actuator actuator = new Actuator(DeviceState.NOT_ASSIGNED, farmer);
             farmer.getActuators().add(actuator);
             farmerRepository.save(farmer);
         }
     }
 
     public Optional<Farmer> addSensor(UUID farmerId) {
-        Sensor sensor = new Sensor(DeviceState.NOT_ASSIGNED);
         Optional<Farmer> farmerOptional = farmerRepository.findById(farmerId);
         if (farmerOptional.isPresent()) {
             Farmer farmer = farmerOptional.get();
+            Sensor sensor = new Sensor(DeviceState.NOT_ASSIGNED, farmer);
             farmer.getSensors().add(sensor);
             farmerRepository.save(farmer);
             return Optional.of(farmer);

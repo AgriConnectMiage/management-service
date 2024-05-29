@@ -27,10 +27,10 @@ public class Field {
     @JoinColumn(name = "farmer_id")
     private Farmer farmer;
 
-    @OneToMany(mappedBy = "field")
+    @OneToMany(mappedBy = "field", cascade = CascadeType.ALL)
     private List<Sensor> sensors = new ArrayList<>();
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "actuator_id", referencedColumnName = "id")
     private Actuator actuator;
 
