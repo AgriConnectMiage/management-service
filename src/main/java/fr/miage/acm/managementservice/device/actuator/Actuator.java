@@ -3,8 +3,10 @@ package fr.miage.acm.managementservice.device.actuator;
 import fr.miage.acm.managementservice.device.Device;
 import fr.miage.acm.managementservice.device.DeviceState;
 import fr.miage.acm.managementservice.farmer.Farmer;
+import fr.miage.acm.managementservice.field.Field;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,9 +20,14 @@ public class Actuator extends Device {
     @JoinColumn(name = "watering_event_id", referencedColumnName = "id")
     private WateringEvent wateringEvent;
 
-    public Actuator(DeviceState state, Farmer farmer){
+    @OneToOne
+    @JoinColumn(name = "field_id")
+    private Field field;
+
+    public Actuator(DeviceState state, Farmer farmer) {
         super(state, farmer);
         this.wateringEvent = null;
+        this.field = null;
     }
 
     public Actuator() {

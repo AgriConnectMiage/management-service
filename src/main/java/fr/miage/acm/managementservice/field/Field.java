@@ -30,8 +30,7 @@ public class Field {
     @OneToMany(mappedBy = "field", cascade = CascadeType.ALL)
     private List<Sensor> sensors = new ArrayList<>();
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "actuator_id", referencedColumnName = "id")
+    @OneToOne(mappedBy = "field", cascade = CascadeType.ALL)
     private Actuator actuator;
 
     public Field(Integer xcoord, Integer ycoord) {
