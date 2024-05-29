@@ -20,6 +20,7 @@ import java.util.UUID;
 public class Farmer {
 
     @Id
+    @GeneratedValue
     private UUID id;
 
     private String firstName;

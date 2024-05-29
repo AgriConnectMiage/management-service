@@ -66,6 +66,15 @@ public class FarmerService {
 
     }
 
+    public void editPassword(UUID id , String password) {
+        Optional<Farmer> farmerOptional = farmerRepository.findById(id);
+        if (farmerOptional.isPresent()) {
+            Farmer farmer = farmerOptional.get();
+            farmer.setPassword(password);
+            farmerRepository.save(farmer);
+        }
+    }
+
     public Optional<Farmer> addSensor(UUID id, Sensor sensor) {
         Optional<Farmer> farmerOptional = farmerRepository.findById(id);
         if (farmerOptional.isPresent()) {

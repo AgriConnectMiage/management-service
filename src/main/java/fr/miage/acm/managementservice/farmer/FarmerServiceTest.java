@@ -45,8 +45,7 @@ public class FarmerServiceTest {
     public void editPassword() {
         Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
         if (farmer != null) {
-            farmer.setPassword("newpassword");
-            farmerService.save(farmer);
+            farmerService.editPassword(farmer.getId(), "newPassword");
             System.out.println("Password edited: " + farmer.getEmail());
         }
     }
