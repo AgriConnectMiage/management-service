@@ -14,37 +14,22 @@ public class FarmerServiceTest {
     }
 
     public void createFarmers() {
-        createFarmer("John", "Doe", "johndoe@gmail.com", "password", 3);
-        createFarmer("Jack", "Doe", "jackdoe@gmail.com", "password", 3);
-        createFarmer("Jane", "Doe", "janedoe@gmail.com", "password", 3);
-    }
-
-    public void createFarmer(String firstName, String lastName, String email, String password, int fieldSize) {
-        Farmer farmerSearch = farmerService.findByEmail(email);
-        if (farmerSearch == null) {
-            Farmer farmer = new Farmer(firstName, lastName, email, password, fieldSize);
-            farmerService.save(farmer);
-            System.out.println("Farmer created: " + farmer.getEmail());
-        }
+        farmerService.createFarmer("John", "Doe", "johndoe@gmail.com", "password", 3);
+        farmerService.createFarmer("Jack", "Doe", "jackdoe@gmail.com", "password", 3);
+        farmerService.createFarmer("Jane", "Doe", "janedoe@gmail.com", "password", 3);
     }
 
     public void removeFarmers() {
-        removeFarmerByEmail("johndoe@gmail.com");
-        removeFarmerByEmail("janedoe@gmail.com");
-        removeFarmerByEmail("jackdoe@gmail.com");
-    }
-
-    private void removeFarmerByEmail(String email) {
-        Farmer farmer = farmerService.findByEmail(email);
-        if (farmer != null) {
+        farmerService.findAll().forEach(farmer -> {
             farmerService.delete(farmer);
             System.out.println("Farmer removed: " + farmer.getEmail());
-        }
+        });
     }
 
     public void editPassword() {
         Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
         if (farmer != null) {
+            System.out.println(farmer);
             farmerService.editPassword(farmer.getId(), "newPassword");
             System.out.println("Password edited: " + farmer.getEmail());
         }

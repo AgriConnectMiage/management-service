@@ -59,14 +59,26 @@ public class FarmerService {
             fieldService.delete(field);
         }
         for (Sensor sensor : farmer.getSensors()) {
-            farmer.getSensors().remove(sensor);}
+            farmer.getSensors().remove(sensor);
+        }
         for (Actuator actuator : farmer.getActuators()) {
             farmer.getActuators().remove(actuator);
         }
 
     }
 
-    public void editPassword(UUID id , String password) {
+
+    public Farmer createFarmer(String firstName, String lastName, String email, String password, int fieldSize) {
+        Farmer farmerSearch = findByEmail(email);
+        if (farmerSearch == null) {
+            Farmer farmer = new Farmer(firstName, lastName, email, password, fieldSize);
+            this.save(farmer);
+            return farmer;
+        }
+        return null;
+    }
+
+    public void editPassword(UUID id, String password) {
         Optional<Farmer> farmerOptional = farmerRepository.findById(id);
         if (farmerOptional.isPresent()) {
             Farmer farmer = farmerOptional.get();

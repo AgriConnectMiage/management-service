@@ -49,8 +49,8 @@ public class Farmer {
         this.fields = new ArrayList<>();
         for(int x = 0; x < fieldSize; x++) {
             for(int y = 0; y < fieldSize; y++) {
-                Field field = new Field(x+1, y+1, this);
-                fields.add(field);
+                Field field = new Field(x+1, y+1);
+                this.fields.add(field);
             }
         }
     }

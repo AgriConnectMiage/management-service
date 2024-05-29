@@ -1,6 +1,7 @@
 package fr.miage.acm.managementservice;
 
 
+import fr.miage.acm.managementservice.farmer.FarmerService;
 import fr.miage.acm.managementservice.farmer.FarmerServiceTest;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,9 +18,11 @@ public class ManagementServiceApplication {
 
         FarmerServiceTest farmerServiceTest = context.getBean(FarmerServiceTest.class);
 
+        FarmerService farmerService = context.getBean(FarmerService.class);
 //        farmerServiceTest.removeFarmers();
         farmerServiceTest.createFarmers();
-        farmerServiceTest.editPassword();
+//        farmerServiceTest.editPassword();
+
 
     }
 }

@@ -20,12 +20,12 @@ import java.util.UUID;
 public class Field {
 
     @Id
+    @GeneratedValue
     private UUID id;
 
     private Integer xcoord;
     private Integer ycoord;
 
-    @Relationship(type = "OWNED_BY", direction = Relationship.Direction.OUTGOING)
     private Farmer farmer;
 
     @Relationship(type = "HAS_SENSOR")
@@ -34,10 +34,9 @@ public class Field {
     @Relationship(type = "HAS_ACTUATOR")
     private Actuator actuator;
 
-    public Field(Integer xcoord, Integer ycoord, Farmer farmer) {
+    public Field(Integer xcoord, Integer ycoord) {
         this.xcoord = xcoord;
         this.ycoord = ycoord;
-        this.farmer = farmer;
         this.sensors = new ArrayList<>();
         this.actuator = null;
     }
@@ -49,7 +48,6 @@ public class Field {
                 "id=" + id +
                 ", xcoord=" + xcoord +
                 ", ycoord=" + ycoord +
-                ", farmer=" + farmer.getId() +
                 '}';
     }
 }
