@@ -118,50 +118,76 @@ public class FarmerService {
 
     public void removeActuator(UUID farmerId, UUID actuatorId) {
         Optional<Farmer> farmerOptional = farmerRepository.findById(farmerId);
-        if (farmerOptional.isPresent()) {
+        Optional<Actuator> actuatorOptional = actuatorService.findById(actuatorId);
+        if (farmerOptional.isPresent() && actuatorOptional.isPresent()) {
             Farmer farmer = farmerOptional.get();
-            farmer.getActuators().removeIf(actuator -> actuator.getId().equals(actuatorId));
-            actuatorService.delete(actuatorService.findById(actuatorId).get());
+            Actuator actuator = actuatorOptional.get();
+            if (actuator.getState() == DeviceState.ON || actuator.getState() == DeviceState.OFF) {
+                actuator.setState(DeviceState.NOT_ASSIGNED);
+                actuator.setField(null);
+                if (actuator.getField() != null) {
+                    actuator.getField().setActuator(null);
+                    fieldService.save(actuator.getField());
+                }
+            }
+            farmer.getActuators().removeIf(a -> a.getId().equals(actuatorId));
+            actuator.setFarmer(null);
             farmerRepository.save(farmer);
+            actuatorService.delete(actuator);
         }
     }
 
     public void removeSensor(UUID farmerId, UUID sensorId) {
         Optional<Farmer> farmerOptional = farmerRepository.findById(farmerId);
-        if (farmerOptional.isPresent()) {
+        Optional<Sensor> sensorOptional = sensorService.findById(sensorId);
+        if (farmerOptional.isPresent() && sensorOptional.isPresent()) {
             Farmer farmer = farmerOptional.get();
-            farmer.getSensors().removeIf(sensor -> sensor.getId().equals(sensorId));
-            sensorService.delete(sensorService.findById(sensorId).get());
+            Sensor sensor = sensorOptional.get();
+            if (sensor.getState() == DeviceState.ON || sensor.getState() == DeviceState.OFF) {
+                sensor.setState(DeviceState.NOT_ASSIGNED);
+                sensor.setField(null);
+            }
+            farmer.getSensors().removeIf(s -> s.getId().equals(sensorId));
+            sensor.setFarmer(null);
             farmerRepository.save(farmer);
+            sensorService.delete(sensor);
         }
     }
 
-    // Assign actuator to field
     public Optional<Actuator> assignActuatorToField(UUID farmerId, UUID actuatorId, UUID fieldId) {
         Optional<Farmer> farmerOptional = farmerRepository.findById(farmerId);
         Optional<Actuator> actuatorOptional = actuatorService.findById(actuatorId);
         Optional<Field> fieldOptional = fieldService.findById(fieldId);
-
         if (farmerOptional.isPresent() && actuatorOptional.isPresent() && fieldOptional.isPresent()) {
-            Farmer farmer = farmerOptional.get();
             Actuator actuator = actuatorOptional.get();
             Field field = fieldOptional.get();
             if (actuator.getState() == DeviceState.NOT_ASSIGNED) {
-                System.out.println(farmer);
-                System.out.println(actuator);
-                System.out.println(field);
                 actuator.setState(DeviceState.OFF);
                 actuator.setField(field);
-                field.setActuator(actuator);
                 actuatorService.save(actuator);
-                fieldService.save(field);
-                farmerRepository.save(farmer);
-                System.out.println(farmer);
-                System.out.println(actuator);
-                System.out.println(field);
                 return Optional.of(actuator);
             } else {
                 System.out.println("Actuator is already assigned to a field");
+                return Optional.empty();
+            }
+        }
+        return Optional.empty();
+    }
+
+    public Optional<Sensor> assignSensorToField(UUID farmerId, UUID sensorId, UUID fieldId) {
+        Optional<Farmer> farmerOptional = farmerRepository.findById(farmerId);
+        Optional<Sensor> sensorOptional = sensorService.findById(sensorId);
+        Optional<Field> fieldOptional = fieldService.findById(fieldId);
+        if (farmerOptional.isPresent() && sensorOptional.isPresent() && fieldOptional.isPresent()) {
+            Sensor sensor = sensorOptional.get();
+            Field field = fieldOptional.get();
+            if (sensor.getState() == DeviceState.NOT_ASSIGNED) {
+                sensor.setState(DeviceState.OFF);
+                sensor.setField(field);
+                sensorService.save(sensor);
+                return Optional.of(sensor);
+            } else {
+                System.out.println("Sensor is already assigned to a field");
                 return Optional.empty();
             }
         }

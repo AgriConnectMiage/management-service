@@ -19,6 +19,11 @@ public class SensorService {
     @Autowired
     private FieldRepository fieldRepository;
 
+    // save method
+    public Sensor save(Sensor sensor) {
+        return sensorRepository.save(sensor);
+    }
+
     public Sensor insertSensor(Sensor sensor) {
         return sensorRepository.save(sensor);
     }

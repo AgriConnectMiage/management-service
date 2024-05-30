@@ -22,9 +22,10 @@ public class ManagementServiceApplication {
         farmerServiceTest.createFarmers();
 //        farmerServiceTest.editPassword();
         farmerServiceTest.addActuator();
-        farmerServiceTest.addSensor();
+//        farmerServiceTest.addSensor();
+        farmerServiceTest.assignActuatorToField();
+//        farmerServiceTest.assignSensorToField();
+        farmerServiceTest.removeActuator();
 //        farmerServiceTest.removeSensor();
-//        farmerServiceTest.removeActuator();
-//         farmerServiceTest.assignActuatorToField();
     }
 }

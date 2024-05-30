@@ -69,12 +69,19 @@ public class FarmerServiceTest {
         }
     }
 
-    // Assign actuator to field
     public void assignActuatorToField() {
         Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
         if (farmer != null) {
             farmerService.assignActuatorToField(farmer.getId(), farmer.getActuators().get(0).getId(), farmer.getFields().get(0).getId());
             System.out.println("Actuator assigned to field: " + farmer.getEmail());
+        }
+    }
+
+    public void assignSensorToField() {
+        Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
+        if (farmer != null) {
+            farmerService.assignSensorToField(farmer.getId(), farmer.getSensors().get(0).getId(), farmer.getFields().get(0).getId());
+            System.out.println("Sensor assigned to field: " + farmer.getEmail());
         }
     }
 
