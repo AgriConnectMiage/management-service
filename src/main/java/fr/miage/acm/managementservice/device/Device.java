@@ -23,17 +23,13 @@ public abstract class Device {
     @Enumerated(EnumType.STRING)
     private DeviceState state;
 
-    @OneToMany(mappedBy = "device")
-    private List<Measurement> measurements;
-
     @ManyToOne
     @JoinColumn(name = "farmer_id")
     private Farmer farmer;
 
 
-    public Device(DeviceState state, Farmer farmer) {
-        this.state = state;
-        this.measurements = new ArrayList<>();
+    public Device(Farmer farmer) {
+        this.state = DeviceState.NOT_ASSIGNED;
         this.farmer = farmer;
     }
 

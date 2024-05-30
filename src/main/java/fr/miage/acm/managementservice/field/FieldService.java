@@ -1,5 +1,7 @@
 package fr.miage.acm.managementservice.field;
 
+import fr.miage.acm.managementservice.farmer.Farmer;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,5 +29,14 @@ public class FieldService {
 
     public Optional<Field> findById(UUID id) {
         return fieldRepository.findById(id);
+    }
+    
+    public List<Field> findByFarmer(Farmer farmer) {
+        return fieldRepository.findByFarmer(farmer);
+    }
+
+    @Transactional
+    public void deleteFieldsByFarmer(Farmer farmer) {
+        fieldRepository.deleteByFarmer(farmer);
     }
 }

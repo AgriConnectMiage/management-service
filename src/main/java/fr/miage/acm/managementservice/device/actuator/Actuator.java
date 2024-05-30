@@ -24,8 +24,8 @@ public class Actuator extends Device {
     @JoinColumn(name = "field_id")
     private Field field;
 
-    public Actuator(DeviceState state, Farmer farmer) {
-        super(state, farmer);
+    public Actuator(Farmer farmer) {
+        super(farmer);
         this.wateringEvent = null;
         this.field = null;
     }
@@ -39,7 +39,9 @@ public class Actuator extends Device {
         return "Actuator{" +
                 "id=" + getId() +
                 ", state=" + getState() +
-                ", wateringEvent=" + wateringEvent +
+                ", wateringEvent=" + getWateringEvent() +
+                ", field=" + getField() +
+                ", farmer=" + getFarmer() +
                 '}';
     }
 }

@@ -26,8 +26,6 @@ public class Farmer {
     private String password;
     private Integer fieldSize;
 
-    @OneToMany(mappedBy = "farmer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<Sensor> sensors;
 
     @OneToMany(mappedBy = "farmer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Actuator> actuators;
@@ -37,8 +35,6 @@ public class Farmer {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.sensors = new ArrayList<>();
-        this.actuators = new ArrayList<>();
         this.fieldSize = fieldSize;
     }
 
@@ -55,8 +51,6 @@ public class Farmer {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", fieldSize=" + fieldSize +
-                ", sensors=" + sensors +
-                ", actuators=" + actuators +
                 '}';
     }
 }

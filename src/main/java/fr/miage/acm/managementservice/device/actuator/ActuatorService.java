@@ -1,11 +1,13 @@
 package fr.miage.acm.managementservice.device.actuator;
 
 import fr.miage.acm.managementservice.device.DeviceState;
+import fr.miage.acm.managementservice.farmer.Farmer;
 import fr.miage.acm.managementservice.field.Field;
 import fr.miage.acm.managementservice.field.FieldRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -17,6 +19,10 @@ public class ActuatorService {
 
     @Autowired
     private FieldRepository fieldRepository;
+
+    public List<Actuator> findAll() {
+        return actuatorRepository.findAll();
+    }
 
     public Actuator save(Actuator actuator) {
         return actuatorRepository.save(actuator);
@@ -30,22 +36,8 @@ public class ActuatorService {
         return actuatorRepository.findById(id);
     }
 
-    public Optional<Actuator> assignActuatorToField(UUID actuatorId, UUID fieldId) {
-        Optional<Actuator> actuatorOptional = actuatorRepository.findById(actuatorId);
-        Optional<Field> fieldOptional = fieldRepository.findById(fieldId);
-
-        if (actuatorOptional.isPresent() && fieldOptional.isPresent()) {
-            Actuator actuator = actuatorOptional.get();
-            Field field = fieldOptional.get();
-
-            actuator.setState(DeviceState.OFF);
-            actuator.setField(field);
-            field.setActuator(actuator);
-            actuatorRepository.save(actuator);
-            fieldRepository.save(field);
-            return Optional.of(actuator);
-        }
-        return Optional.empty();
+    public Actuator addActuator(Farmer farmer){
+        Actuator actuator = new Actuator(farmer);
+        return actuatorRepository.save(actuator);
     }
-
 }

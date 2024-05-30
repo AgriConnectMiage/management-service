@@ -21,8 +21,8 @@ public class Sensor extends Device {
     @JoinColumn(name = "field_id")
     private Field field;
 
-    public Sensor(DeviceState state, Farmer farmer) {
-        super(state, farmer);
+    public Sensor(Farmer farmer) {
+        super(farmer);
         this.interval = 1000;
         this.field = null;
     }
@@ -36,6 +36,7 @@ public class Sensor extends Device {
         return "Sensor{" +
                 "interval=" + interval +
                 ", state=" + getState() +
+                ", farmer=" + getFarmer() +
                 '}';
     }
 }

@@ -1,12 +1,12 @@
 package fr.miage.acm.managementservice;
 
 
-import fr.miage.acm.managementservice.farmer.FarmerService;
+import fr.miage.acm.managementservice.device.actuator.ActuatorServiceTest;
+import fr.miage.acm.managementservice.device.sensor.SensorServiceTest;
 import fr.miage.acm.managementservice.farmer.FarmerServiceTest;
 import fr.miage.acm.managementservice.field.FieldServiceTest;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.ApplicationContext;
 
@@ -19,14 +19,20 @@ public class ManagementServiceApplication {
 
         FarmerServiceTest farmerServiceTest = context.getBean(FarmerServiceTest.class);
         FieldServiceTest fieldServiceTest = context.getBean(FieldServiceTest.class);
+        SensorServiceTest sensorServiceTest = context.getBean(SensorServiceTest.class);
+        ActuatorServiceTest actuatorServiceTest = context.getBean(ActuatorServiceTest.class);
 
 //        farmerServiceTest.removeFarmers();
         farmerServiceTest.getFarmers();
-        fieldServiceTest.getFields();
+        sensorServiceTest.getSensors();
+        actuatorServiceTest.getActuators();
+//        fieldServiceTest.getFields();
 //        farmerServiceTest.createFarmers();
 //        farmerServiceTest.editPassword();
 //        farmerServiceTest.addActuator();
-//        farmerServiceTest.addSensor();
+//        sensorServiceTest.addSensor();
+//        actuatorServiceTest.addActuator();
+
 //        farmerServiceTest.assignActuatorToField();
 //        farmerServiceTest.assignSensorToField();
 //        farmerServiceTest.removeActuator();
