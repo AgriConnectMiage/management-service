@@ -50,20 +50,11 @@ public class FarmerService {
     public void delete(Farmer farmer) {
         farmerRepository.delete(farmer);
 
-        // delete farmer's fields, sensors and actuators
-        for (int i = 0; i < farmer.getFieldSize(); i++) {
-            fieldService.delete(farmer.getFields().get(i));
-        }
         for (int i = 0; i < farmer.getSensors().size(); i++) {
             farmer.getSensors().remove(i);
         }
         for (int i = 0; i < farmer.getActuators().size(); i++) {
             farmer.getActuators().remove(i);
-        }
-
-        // use for each loop to delete farmer's fields, sensors and actuators
-        for (Field field : farmer.getFields()) {
-            fieldService.delete(field);
         }
         for (Sensor sensor : farmer.getSensors()) {
             farmer.getSensors().remove(sensor);
@@ -80,7 +71,15 @@ public class FarmerService {
         if (farmerSearch == null) {
             Farmer farmer = new Farmer(firstName, lastName, email, password, fieldSize);
             this.save(farmer);
+            for (int i = 0; i < fieldSize; i++) {
+                for (int j = 0; j < fieldSize; j++) {
+                    Field field = new Field(i + 1, j + 1, farmer);
+                    fieldService.save(field);
+                }
+            }
             return farmer;
+        } else {
+            System.out.println("Farmer already exists");
         }
         return null;
     }

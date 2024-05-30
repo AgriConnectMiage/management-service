@@ -22,6 +22,10 @@ public class FarmerServiceTest {
         farmerService.createFarmer("Jane", "Doe", "janedoe@gmail.com", "password", 3);
     }
 
+    public void getFarmers() {
+        farmerService.findAll().forEach(farmer -> System.out.println(farmer.toString()));
+    }
+
     public void removeFarmers() {
         farmerService.findAll().forEach(farmer -> {
             farmerService.delete(farmer);
@@ -72,7 +76,7 @@ public class FarmerServiceTest {
     public void assignActuatorToField() {
         Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
         if (farmer != null) {
-            farmerService.assignActuatorToField(farmer.getId(), farmer.getActuators().get(0).getId(), farmer.getFields().get(0).getId());
+//            farmerService.assignActuatorToField(farmer.getId(), farmer.getActuators().get(0).getId(), farmer.getFields().get(0).getId());
             System.out.println("Actuator assigned to field: " + farmer.getEmail());
         }
     }
@@ -80,7 +84,7 @@ public class FarmerServiceTest {
     public void assignSensorToField() {
         Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
         if (farmer != null) {
-            farmerService.assignSensorToField(farmer.getId(), farmer.getSensors().get(0).getId(), farmer.getFields().get(0).getId());
+//            farmerService.assignSensorToField(farmer.getId(), farmer.getSensors().get(0).getId(), farmer.getFields().get(0).getId());
             System.out.println("Sensor assigned to field: " + farmer.getEmail());
         }
     }

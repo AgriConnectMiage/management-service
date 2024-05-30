@@ -3,6 +3,7 @@ package fr.miage.acm.managementservice.field;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -11,6 +12,10 @@ public class FieldService {
 
     @Autowired
     private FieldRepository fieldRepository;
+
+    public List<Field> findAll() {
+        return fieldRepository.findAll();
+    }
 
     public Field save(Field field) {
         return fieldRepository.save(field);

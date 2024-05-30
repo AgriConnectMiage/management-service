@@ -27,9 +27,6 @@ public class Farmer {
     private Integer fieldSize;
 
     @OneToMany(mappedBy = "farmer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<Field> fields;
-
-    @OneToMany(mappedBy = "farmer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Sensor> sensors;
 
     @OneToMany(mappedBy = "farmer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
@@ -43,14 +40,6 @@ public class Farmer {
         this.sensors = new ArrayList<>();
         this.actuators = new ArrayList<>();
         this.fieldSize = fieldSize;
-        this.fields = new ArrayList<>();
-        for (int x = 0; x < fieldSize; x++) {
-            for (int y = 0; y < fieldSize; y++) {
-                Field field = new Field(x + 1, y + 1);
-                field.setFarmer(this);
-                this.fields.add(field);
-            }
-        }
     }
 
     public Farmer() {
@@ -66,7 +55,6 @@ public class Farmer {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", fieldSize=" + fieldSize +
-                ", fields=" + fields +
                 ", sensors=" + sensors +
                 ", actuators=" + actuators +
                 '}';

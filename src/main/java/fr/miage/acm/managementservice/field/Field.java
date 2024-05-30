@@ -33,11 +33,12 @@ public class Field {
     @OneToOne(mappedBy = "field", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Actuator actuator;
 
-    public Field(Integer xcoord, Integer ycoord) {
+    public Field(Integer xcoord, Integer ycoord, Farmer farmer) {
         this.xcoord = xcoord;
         this.ycoord = ycoord;
         this.sensors = new ArrayList<>();
         this.actuator = null;
+        this.farmer = farmer;
     }
 
     public Field() {
@@ -50,6 +51,7 @@ public class Field {
                 "id=" + id +
                 ", xcoord=" + xcoord +
                 ", ycoord=" + ycoord +
+                ", farmer=" + farmer +
                 '}';
     }
 }
