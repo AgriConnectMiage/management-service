@@ -37,6 +37,10 @@ public class SensorService {
         return sensorRepository.findById(id);
     }
 
+    public List<Sensor> findByFarmer(Farmer farmer) {
+        return sensorRepository.findByFarmer(farmer);
+    }
+
     public void delete(Sensor sensor) {
         sensorRepository.delete(sensor);
     }
@@ -51,23 +55,9 @@ public class SensorService {
         sensorRepository.deleteByFarmer(farmer);
     }
 
-
-
-    @Transactional
-    public Optional<Sensor> assignSensorToField(UUID sensorId, UUID fieldId) {
-        Optional<Sensor> sensorOptional = sensorRepository.findById(sensorId);
-        Optional<Field> fieldOptional = fieldRepository.findById(fieldId);
-
-        if (sensorOptional.isPresent() && fieldOptional.isPresent()) {
-            Sensor sensor = sensorOptional.get();
-            Field field = fieldOptional.get();
-
-            sensor.setState(DeviceState.ON);
-            sensorRepository.save(sensor);
-            fieldRepository.save(field);
-            return Optional.of(sensor);
-        }
-        return Optional.empty();
+    public Sensor assignSensorToField(Sensor sensor, Field field) {
+        sensor.setField(field);
+        return sensorRepository.save(sensor);
     }
 
     // Method to change the state of a sensor

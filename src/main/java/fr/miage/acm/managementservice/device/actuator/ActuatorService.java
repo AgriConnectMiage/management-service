@@ -36,8 +36,17 @@ public class ActuatorService {
         return actuatorRepository.findById(id);
     }
 
-    public Actuator addActuator(Farmer farmer){
+    public List<Actuator> findByFarmer(Farmer farmer) {
+        return actuatorRepository.findByFarmer(farmer);
+    }
+
+    public Actuator addActuator(Farmer farmer) {
         Actuator actuator = new Actuator(farmer);
+        return actuatorRepository.save(actuator);
+    }
+
+    public Actuator assignActuatorToField(Actuator actuator, Field field) {
+        actuator.setField(field);
         return actuatorRepository.save(actuator);
     }
 }
