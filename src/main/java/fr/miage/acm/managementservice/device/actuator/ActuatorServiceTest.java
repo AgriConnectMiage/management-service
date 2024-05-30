@@ -31,10 +31,17 @@ public class ActuatorServiceTest {
         actuatorService.addActuator(farmer);
     }
 
-        public void assignActuatorToField() {
+    public void assignActuatorToField() {
         Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
         Field field = fieldService.findByFarmer(farmer).get(0);
         Actuator actuator = actuatorService.findByFarmer(farmer).get(0);
         actuatorService.assignActuatorToField(actuator, field);
+    }
+
+    public void removeActuator() {
+        Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
+        Actuator actuator = actuatorService.findByFarmer(farmer).get(0);
+        System.out.println(actuator);
+        actuatorService.delete(actuator);
     }
 }

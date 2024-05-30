@@ -26,10 +26,6 @@ public class Farmer {
     private String password;
     private Integer fieldSize;
 
-
-    @OneToMany(mappedBy = "farmer", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<Actuator> actuators;
-
     public Farmer(String firstName, String lastName, String email, String password, int fieldSize) {
         this.firstName = firstName;
         this.lastName = lastName;

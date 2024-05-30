@@ -1,6 +1,7 @@
 package fr.miage.acm.managementservice.device.actuator;
 
 import fr.miage.acm.managementservice.device.DeviceState;
+import fr.miage.acm.managementservice.device.sensor.Sensor;
 import fr.miage.acm.managementservice.farmer.Farmer;
 import fr.miage.acm.managementservice.field.Field;
 import fr.miage.acm.managementservice.field.FieldRepository;
@@ -49,4 +50,6 @@ public class ActuatorService {
         actuator.setField(field);
         return actuatorRepository.save(actuator);
     }
+
+
 }

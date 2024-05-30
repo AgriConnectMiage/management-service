@@ -60,19 +60,12 @@ public class SensorService {
         return sensorRepository.save(sensor);
     }
 
-    // Method to change the state of a sensor
-    public Optional<Sensor> changeSensorState(UUID sensorId, DeviceState newState) {
-        Optional<Sensor> sensorOptional = sensorRepository.findById(sensorId);
 
-        if (sensorOptional.isPresent()) {
-            Sensor sensor = sensorOptional.get();
-            sensor.setState(newState);
-            sensorRepository.save(sensor);
-            return Optional.of(sensor);
-        }
-        return Optional.empty();
+    public Sensor changeSensorState(Sensor sensor, DeviceState newState) {
+        sensor.setState(newState);
+        sensorRepository.save(sensor);
+        return sensor;
     }
-
 
 
 }
