@@ -25,14 +25,6 @@ public class SensorService {
         return sensorRepository.findAll();
     }
 
-    public Sensor save(Sensor sensor) {
-        return sensorRepository.save(sensor);
-    }
-
-    public Sensor insertSensor(Sensor sensor) {
-        return sensorRepository.save(sensor);
-    }
-
     public Optional<Sensor> findById(UUID id) {
         return sensorRepository.findById(id);
     }
@@ -57,11 +49,23 @@ public class SensorService {
 
     public Sensor assignSensorToField(Sensor sensor, Field field) {
         sensor.setField(field);
+        sensor.setState(DeviceState.OFF);
         return sensorRepository.save(sensor);
     }
 
+    public Sensor unassignSensorFromField(Sensor sensor) {
+        sensor.setField(null);
+        sensor.setState(DeviceState.NOT_ASSIGNED);
+        return sensorRepository.save(sensor);
+    }
 
     public Sensor changeSensorState(Sensor sensor, DeviceState newState) {
+        if ((newState == DeviceState.OFF || newState == DeviceState.ON) && sensor.getField() == null) {
+            throw new IllegalStateException("Cannot change state to " + newState + " of actuator without field");
+        }
+        if (newState == DeviceState.NOT_ASSIGNED && sensor.getField() != null) {
+            throw new IllegalStateException("Cannot change state to " + newState + " of actuator assigned to a field");
+        }
         sensor.setState(newState);
         sensorRepository.save(sensor);
         return sensor;

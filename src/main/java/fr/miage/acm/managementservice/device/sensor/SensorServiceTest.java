@@ -42,6 +42,13 @@ public class SensorServiceTest {
         sensorService.assignSensorToField(sensor, field);
     }
 
+    public void unassignSensorToField() {
+        Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
+        Sensor sensor = sensorService.findByFarmer(farmer).get(0);
+        sensorService.unassignSensorFromField(sensor);
+    }
+
+
     public void removeSensor() {
         Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
         Sensor sensor = sensorService.findByFarmer(farmer).get(0);

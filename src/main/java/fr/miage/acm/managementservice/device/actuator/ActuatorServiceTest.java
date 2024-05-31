@@ -38,6 +38,13 @@ public class ActuatorServiceTest {
         actuatorService.assignActuatorToField(actuator, field);
     }
 
+    // unassign actuators from field
+    public void unassignActuatorToField() {
+        Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
+        Actuator actuator = actuatorService.findByFarmer(farmer).get(0);
+        actuatorService.unassignActuatorFromField(actuator);
+    }
+
     public void removeActuator() {
         Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
         Actuator actuator = actuatorService.findByFarmer(farmer).get(0);

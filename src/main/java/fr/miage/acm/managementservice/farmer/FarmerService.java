@@ -73,6 +73,7 @@ public class FarmerService {
     public void removeFarmer(Farmer farmer) {
         fieldService.deleteFieldsByFarmer(farmer);
         sensorService.removeSensorsByFarmer(farmer);
+        actuatorService.removeActuatorsByFarmer(farmer);
         farmerRepository.delete(farmer);
     }
 

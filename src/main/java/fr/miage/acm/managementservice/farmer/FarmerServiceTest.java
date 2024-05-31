@@ -6,6 +6,8 @@ import fr.miage.acm.managementservice.device.sensor.Sensor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class FarmerServiceTest {
 
@@ -26,6 +28,11 @@ public class FarmerServiceTest {
         farmerService.findAll().forEach(farmer -> System.out.println(farmer.toString()));
     }
 
+    // remove all farmers
+    public void removeFarmers() {
+        List<Farmer> farmers = farmerService.findAll();
+        farmers.forEach(farmerService::removeFarmer);
+    }
 
     public void editPassword() {
         Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
