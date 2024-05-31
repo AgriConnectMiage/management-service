@@ -8,6 +8,8 @@ import fr.miage.acm.managementservice.field.FieldService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
+
 @Component
 public class ActuatorServiceTest {
     private final ActuatorService actuatorService;
@@ -50,5 +52,11 @@ public class ActuatorServiceTest {
         Actuator actuator = actuatorService.findByFarmer(farmer).get(0);
         System.out.println(actuator);
         actuatorService.delete(actuator);
+    }
+
+    public void addWateringEvent() {
+        Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
+        Actuator actuator = actuatorService.findByFarmer(farmer).get(0);
+        actuatorService.addWateringEvent(actuator, new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()), 10, 10);
     }
 }

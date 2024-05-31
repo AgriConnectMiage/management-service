@@ -37,5 +37,7 @@ public class ManagementServiceApplication {
 //        sensorServiceTest.unassignSensorToField();
 //        actuatorServiceTest.removeActuator();
 //        sensorServiceTest.removeSensor();
+
+        actuatorServiceTest.addWateringEvent();
     }
 }

@@ -1,10 +1,9 @@
-package fr.miage.acm.managementservice.device.actuator;
+package fr.miage.acm.managementservice.device.watering.event;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.ws.rs.container.PreMatching;
 import lombok.Getter;
 import lombok.Setter;
 
