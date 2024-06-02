@@ -34,12 +34,11 @@ public class ManagementServiceApplication {
 //        actuatorServiceTest.addActuator();
 //        actuatorServiceTest.assignActuatorToField();
 //        sensorServiceTest.assignSensorToField();
-        actuatorServiceTest.unassignActuatorToField();
-        sensorServiceTest.unassignSensorToField();
+//        actuatorServiceTest.unassignActuatorToField();
+//        sensorServiceTest.unassignSensorToField();
 //        actuatorServiceTest.removeActuator();
 //        sensorServiceTest.removeSensor();
-
-        actuatorServiceTest.changeActuatorState();
-        sensorServiceTest.changeSensorState();
+//        actuatorServiceTest.changeActuatorState();
+//        sensorServiceTest.changeSensorState();
     }
 }

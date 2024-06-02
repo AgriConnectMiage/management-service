@@ -62,4 +62,19 @@ public class SensorService {
         sensor.setState(DeviceState.NOT_ASSIGNED);
         return sensorRepository.save(sensor);
     }
+
+    public Sensor changeState(Sensor sensor, DeviceState state) {
+        sensor.setState(state);
+        return sensorRepository.save(sensor);
+    }
+
+    public Sensor changeInterval(Sensor sensor, int interval) {
+        sensor.setInterval(interval);
+        return sensorRepository.save(sensor);
+    }
+
+    public void changeInterval(List<Sensor> sensors, int interval) {
+        sensors.forEach(sensor -> sensor.setInterval(interval));
+        sensorRepository.saveAll(sensors);
+    }
 }

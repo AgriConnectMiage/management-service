@@ -21,7 +21,7 @@ public class ActuatorService {
 
     @Autowired
     private FieldRepository fieldRepository;
-    
+
     public List<Actuator> findAll() {
         return actuatorRepository.findAll();
     }
@@ -62,5 +62,11 @@ public class ActuatorService {
         actuator.setField(null);
         actuator.setState(DeviceState.NOT_ASSIGNED);
         return actuatorRepository.save(actuator);
+    }
+
+    public Actuator changeState(Actuator actuator, DeviceState state) {
+        actuator.setState(state);
+        return actuatorRepository.save(actuator);
+
     }
 }

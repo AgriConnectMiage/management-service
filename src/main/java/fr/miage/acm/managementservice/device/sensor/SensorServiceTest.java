@@ -59,7 +59,7 @@ public class SensorServiceTest {
     public void changeSensorState() {
         Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
         Sensor sensor = sensorService.findByFarmer(farmer).get(0);
-        sensor.setState(sensor.getState().equals(DeviceState.ON) ? DeviceState.OFF : DeviceState.ON);
+        sensorService.changeState(sensor, sensor.getState().equals(DeviceState.ON) ? DeviceState.OFF : DeviceState.ON);
         sensorService.save(sensor);
     }
 

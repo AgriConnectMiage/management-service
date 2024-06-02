@@ -50,4 +50,11 @@ public class Sensor extends Device {
         this.state = newState;
         return;
     }
+
+    public void setInterval(float interval) {
+        if (interval <= 0) {
+            throw new IllegalArgumentException("Interval must be positive");
+        }
+        this.interval = interval;
+    }
 }
