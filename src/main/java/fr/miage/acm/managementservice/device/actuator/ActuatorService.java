@@ -1,8 +1,6 @@
 package fr.miage.acm.managementservice.device.actuator;
 
 import fr.miage.acm.managementservice.device.DeviceState;
-import fr.miage.acm.managementservice.device.watering.event.WateringEvent;
-import fr.miage.acm.managementservice.device.watering.event.WateringEventService;
 import fr.miage.acm.managementservice.farmer.Farmer;
 import fr.miage.acm.managementservice.field.Field;
 import fr.miage.acm.managementservice.field.FieldRepository;
@@ -24,13 +22,6 @@ public class ActuatorService {
     @Autowired
     private FieldRepository fieldRepository;
     
-    private final WateringEventService wateringEventService;
-    
-    @Autowired
-    public ActuatorService(WateringEventService wateringEventService) {
-        this.wateringEventService = wateringEventService;
-    }
-
     public List<Actuator> findAll() {
         return actuatorRepository.findAll();
     }
@@ -56,14 +47,6 @@ public class ActuatorService {
         return actuatorRepository.save(actuator);
     }
 
-    // Add watering event
-    public Actuator addWateringEvent(Actuator actuator, Timestamp beginDate, Timestamp endDate, float duration, float humidityThreshold) {
-        WateringEvent wateringEvent = new WateringEvent(beginDate, endDate, duration, humidityThreshold);
-        wateringEventService.addWateringEvent(wateringEvent);
-        actuator.setWateringEvent(wateringEvent);
-        return actuatorRepository.save(actuator);
-    }
-
     @Transactional
     public void removeActuatorsByFarmer(Farmer farmer) {
         actuatorRepository.deleteByFarmer(farmer);
@@ -79,18 +62,5 @@ public class ActuatorService {
         actuator.setField(null);
         actuator.setState(DeviceState.NOT_ASSIGNED);
         return actuatorRepository.save(actuator);
-    }
-
-    public Actuator changeActuatorState(Actuator actuator, DeviceState newState) {
-
-        if ((newState == DeviceState.OFF || newState == DeviceState.ON) && actuator.getField() == null) {
-            throw new IllegalStateException("Cannot change state to " + newState + " of actuator without field");
-        }
-        if (newState == DeviceState.NOT_ASSIGNED && actuator.getField() != null) {
-            throw new IllegalStateException("Cannot change state to " + newState + " of actuator assigned to a field");
-        }
-        actuator.setState(newState);
-        actuatorRepository.save(actuator);
-        return actuator;
     }
 }

@@ -1,4 +1,4 @@
-package fr.miage.acm.managementservice.device.watering.event;
+package fr.miage.acm.managementservice.device.actuator;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

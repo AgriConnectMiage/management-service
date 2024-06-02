@@ -33,6 +33,10 @@ public class SensorService {
         return sensorRepository.findByFarmer(farmer);
     }
 
+    public Sensor save(Sensor sensor) {
+        return sensorRepository.save(sensor);
+    }
+
     public void delete(Sensor sensor) {
         sensorRepository.delete(sensor);
     }
@@ -58,18 +62,4 @@ public class SensorService {
         sensor.setState(DeviceState.NOT_ASSIGNED);
         return sensorRepository.save(sensor);
     }
-
-    public Sensor changeSensorState(Sensor sensor, DeviceState newState) {
-        if ((newState == DeviceState.OFF || newState == DeviceState.ON) && sensor.getField() == null) {
-            throw new IllegalStateException("Cannot change state to " + newState + " of actuator without field");
-        }
-        if (newState == DeviceState.NOT_ASSIGNED && sensor.getField() != null) {
-            throw new IllegalStateException("Cannot change state to " + newState + " of actuator assigned to a field");
-        }
-        sensor.setState(newState);
-        sensorRepository.save(sensor);
-        return sensor;
-    }
-
-
 }

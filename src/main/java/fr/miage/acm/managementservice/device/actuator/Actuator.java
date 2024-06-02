@@ -1,7 +1,7 @@
 package fr.miage.acm.managementservice.device.actuator;
 
 import fr.miage.acm.managementservice.device.Device;
-import fr.miage.acm.managementservice.device.watering.event.WateringEvent;
+import fr.miage.acm.managementservice.device.DeviceState;
 import fr.miage.acm.managementservice.farmer.Farmer;
 import fr.miage.acm.managementservice.field.Field;
 import jakarta.persistence.Entity;
@@ -42,5 +42,16 @@ public class Actuator extends Device {
                 ", field=" + getField() +
                 ", farmer=" + getFarmer() +
                 '}';
+    }
+
+    public void setState(DeviceState newState) {
+        if ((newState == DeviceState.OFF || newState == DeviceState.ON) && this.getField() == null) {
+            throw new IllegalStateException("Cannot change state to " + newState + " of actuator without field");
+        }
+        if (newState == DeviceState.NOT_ASSIGNED && this.getField() != null) {
+            throw new IllegalStateException("Cannot change state to " + newState + " of actuator assigned to a field");
+        }
+        this.state = newState;
+        return;
     }
 }

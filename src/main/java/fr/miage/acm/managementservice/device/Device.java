@@ -1,5 +1,6 @@
 package fr.miage.acm.managementservice.device;
 
+import fr.miage.acm.managementservice.device.actuator.Actuator;
 import fr.miage.acm.managementservice.field.Field;
 import fr.miage.acm.managementservice.farmer.Farmer;
 import jakarta.persistence.*;
@@ -21,7 +22,7 @@ public abstract class Device {
     private UUID id;
 
     @Enumerated(EnumType.STRING)
-    private DeviceState state;
+    protected DeviceState state;
 
     @ManyToOne
     @JoinColumn(name = "farmer_id")
@@ -36,4 +37,5 @@ public abstract class Device {
     public Device() {
         // Default constructor required by JPA
     }
+
 }

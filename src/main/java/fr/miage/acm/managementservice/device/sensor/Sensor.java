@@ -39,4 +39,15 @@ public class Sensor extends Device {
                 ", farmer=" + getFarmer() +
                 '}';
     }
+
+        public void setState(DeviceState newState) {
+        if ((newState == DeviceState.OFF || newState == DeviceState.ON) && this.getField() == null) {
+            throw new IllegalStateException("Cannot change state to " + newState + " of actuator without field");
+        }
+        if (newState == DeviceState.NOT_ASSIGNED && this.getField() != null) {
+            throw new IllegalStateException("Cannot change state to " + newState + " of actuator assigned to a field");
+        }
+        this.state = newState;
+        return;
+    }
 }

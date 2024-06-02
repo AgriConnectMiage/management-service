@@ -21,6 +21,7 @@ public class ManagementServiceApplication {
         FieldServiceTest fieldServiceTest = context.getBean(FieldServiceTest.class);
         SensorServiceTest sensorServiceTest = context.getBean(SensorServiceTest.class);
         ActuatorServiceTest actuatorServiceTest = context.getBean(ActuatorServiceTest.class);
+
 //        farmerServiceTest.getFarmers();
 //        sensorServiceTest.getSensors();
 //        actuatorServiceTest.getActuators();
@@ -33,11 +34,12 @@ public class ManagementServiceApplication {
 //        actuatorServiceTest.addActuator();
 //        actuatorServiceTest.assignActuatorToField();
 //        sensorServiceTest.assignSensorToField();
-//        actuatorServiceTest.unassignActuatorToField();
-//        sensorServiceTest.unassignSensorToField();
+        actuatorServiceTest.unassignActuatorToField();
+        sensorServiceTest.unassignSensorToField();
 //        actuatorServiceTest.removeActuator();
 //        sensorServiceTest.removeSensor();
 
-        actuatorServiceTest.addWateringEvent();
+        actuatorServiceTest.changeActuatorState();
+        sensorServiceTest.changeSensorState();
     }
 }

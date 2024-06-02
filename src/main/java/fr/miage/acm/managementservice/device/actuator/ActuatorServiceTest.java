@@ -1,5 +1,6 @@
 package fr.miage.acm.managementservice.device.actuator;
 
+import fr.miage.acm.managementservice.device.DeviceState;
 import fr.miage.acm.managementservice.device.sensor.Sensor;
 import fr.miage.acm.managementservice.farmer.Farmer;
 import fr.miage.acm.managementservice.farmer.FarmerService;
@@ -40,7 +41,6 @@ public class ActuatorServiceTest {
         actuatorService.assignActuatorToField(actuator, field);
     }
 
-    // unassign actuators from field
     public void unassignActuatorToField() {
         Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
         Actuator actuator = actuatorService.findByFarmer(farmer).get(0);
@@ -54,9 +54,10 @@ public class ActuatorServiceTest {
         actuatorService.delete(actuator);
     }
 
-    public void addWateringEvent() {
+    public void changeActuatorState() {
         Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
         Actuator actuator = actuatorService.findByFarmer(farmer).get(0);
-        actuatorService.addWateringEvent(actuator, new Timestamp(System.currentTimeMillis()), new Timestamp(System.currentTimeMillis()), 10, 10);
+        actuator.setState(actuator.getState().equals(DeviceState.ON) ? DeviceState.OFF : DeviceState.ON);
+        actuatorService.save(actuator);
     }
 }

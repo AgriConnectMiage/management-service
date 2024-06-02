@@ -5,6 +5,7 @@ import fr.miage.acm.managementservice.farmer.FarmerService;
 import fr.miage.acm.managementservice.field.Field;
 import fr.miage.acm.managementservice.field.FieldService;
 import org.springframework.stereotype.Component;
+import fr.miage.acm.managementservice.device.DeviceState;
 
 import java.util.List;
 
@@ -25,10 +26,10 @@ public class SensorServiceTest {
         sensorService.findAll().forEach(sensor -> System.out.println(sensor.toString()));
     }
 
-    // Print all sensors
     public void removeSensors() {
         sensorService.findAll().forEach(sensor -> System.out.println(sensor.toString()));
     }
+
 
     public void addSensor() {
         Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
@@ -53,6 +54,13 @@ public class SensorServiceTest {
         Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
         Sensor sensor = sensorService.findByFarmer(farmer).get(0);
         sensorService.delete(sensor);
+    }
+
+    public void changeSensorState() {
+        Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
+        Sensor sensor = sensorService.findByFarmer(farmer).get(0);
+        sensor.setState(sensor.getState().equals(DeviceState.ON) ? DeviceState.OFF : DeviceState.ON);
+        sensorService.save(sensor);
     }
 
 }
