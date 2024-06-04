@@ -17,10 +17,6 @@ public class FarmerServiceTest {
         this.farmerService = farmerService;
     }
 
-    public FarmerServiceTest(FarmerService farmerService, Sensor sensor, Actuator actuator) {
-        this.farmerService = farmerService;
-    }
-
     public void createFarmers() {
         farmerService.createFarmer("John", "Doe", "johndoe@gmail.com", "password", 3);
         farmerService.createFarmer("Jack", "Doe", "jackdoe@gmail.com", "password", 3);
