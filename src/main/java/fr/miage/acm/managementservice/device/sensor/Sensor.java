@@ -14,7 +14,7 @@ import lombok.Setter;
 @Setter
 @Entity
 public class Sensor extends Device {
-    // Interval between two measurements in milliseconds
+    // Interval between two measurements in seconds
     private float interval;
 
     @ManyToOne
@@ -23,7 +23,7 @@ public class Sensor extends Device {
 
     public Sensor(Farmer farmer) {
         super(farmer);
-        this.interval = 1000;
+        this.interval = 5;
         this.field = null;
     }
 
