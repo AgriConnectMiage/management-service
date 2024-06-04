@@ -15,11 +15,14 @@ import java.util.UUID;
 @Service
 public class SensorService {
 
-    @Autowired
     private SensorRepository sensorRepository;
 
-    @Autowired
     private FieldRepository fieldRepository;
+
+    public SensorService(SensorRepository sensorRepository, FieldRepository fieldRepository) {
+        this.sensorRepository = sensorRepository;
+        this.fieldRepository = fieldRepository;
+    }
 
     public List<Sensor> findAll() {
         return sensorRepository.findAll();
@@ -68,7 +71,7 @@ public class SensorService {
         return sensorRepository.save(sensor);
     }
 
-    public Sensor changeInterval(Sensor sensor, int interval) {
+    public Sensor cxhangeInterval(Sensor sensor, int interval) {
         sensor.setInterval(interval);
         return sensorRepository.save(sensor);
     }

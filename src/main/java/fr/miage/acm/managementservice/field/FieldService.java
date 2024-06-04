@@ -12,8 +12,11 @@ import java.util.UUID;
 @Service
 public class FieldService {
 
-    @Autowired
     private FieldRepository fieldRepository;
+
+    public FieldService(FieldRepository fieldRepository) {
+        this.fieldRepository = fieldRepository;
+    }
 
     public List<Field> findAll() {
         return fieldRepository.findAll();

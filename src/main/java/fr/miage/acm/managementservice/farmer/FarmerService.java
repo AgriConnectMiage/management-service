@@ -17,15 +17,18 @@ import java.util.UUID;
 @Service
 public class FarmerService {
 
-    @Autowired
     private FarmerRepository farmerRepository;
 
-    @Autowired
     private FieldService fieldService;
-    @Autowired
     private SensorService sensorService;
-    @Autowired
     private ActuatorService actuatorService;
+
+    public FarmerService(FarmerRepository farmerRepository, FieldService fieldService, SensorService sensorService, ActuatorService actuatorService) {
+        this.farmerRepository = farmerRepository;
+        this.fieldService = fieldService;
+        this.sensorService = sensorService;
+        this.actuatorService = actuatorService;
+    }
 
     public List<Farmer> findAll() {
         return farmerRepository.findAll();

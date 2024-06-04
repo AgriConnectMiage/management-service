@@ -16,11 +16,14 @@ import java.util.UUID;
 @Service
 public class ActuatorService {
 
-    @Autowired
     private ActuatorRepository actuatorRepository;
 
-    @Autowired
     private FieldRepository fieldRepository;
+
+    public ActuatorService(ActuatorRepository actuatorRepository, FieldRepository fieldRepository) {
+        this.actuatorRepository = actuatorRepository;
+        this.fieldRepository = fieldRepository;
+    }
 
     public List<Actuator> findAll() {
         return actuatorRepository.findAll();

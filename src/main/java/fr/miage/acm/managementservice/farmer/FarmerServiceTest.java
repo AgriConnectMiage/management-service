@@ -13,8 +13,11 @@ public class FarmerServiceTest {
 
     private final FarmerService farmerService;
 
-    @Autowired
     public FarmerServiceTest(FarmerService farmerService) {
+        this.farmerService = farmerService;
+    }
+
+    public FarmerServiceTest(FarmerService farmerService, Sensor sensor, Actuator actuator) {
         this.farmerService = farmerService;
     }
 

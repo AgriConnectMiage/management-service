@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 public class FieldServiceTest {
     private final FieldService fieldService;
 
-    @Autowired
     public FieldServiceTest(FieldService fieldService) {
         this.fieldService = fieldService;
     }

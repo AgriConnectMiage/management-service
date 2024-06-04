@@ -18,7 +18,6 @@ public class ActuatorServiceTest {
     private final FieldService fieldService;
 
 
-    @Autowired
     public ActuatorServiceTest(ActuatorService actuatorService, FarmerService farmerService, FieldService fieldService) {
         this.actuatorService = actuatorService;
         this.farmerService = farmerService;

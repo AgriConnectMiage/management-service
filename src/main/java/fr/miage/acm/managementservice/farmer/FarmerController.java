@@ -11,8 +11,11 @@ import java.util.UUID;
 @RequestMapping("/farmers")
 public class FarmerController {
 
-    @Autowired
     private FarmerService farmerService;
+
+    public FarmerController(FarmerService farmerService) {
+        this.farmerService = farmerService;
+    }
 
     @GetMapping
     public List<Farmer> getAllFarmers() {
