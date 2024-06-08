@@ -20,11 +20,15 @@ public class Sensor extends Device {
     @ManyToOne
     @JoinColumn(name = "field_id")
     private Field field;
+    private Integer currentTemp;
+    private Integer currentHumidity;
 
     public Sensor(Farmer farmer) {
         super(farmer);
         this.interval = 5;
         this.field = null;
+        this.currentTemp = null;
+        this.currentHumidity = null;
     }
 
     public Sensor() {

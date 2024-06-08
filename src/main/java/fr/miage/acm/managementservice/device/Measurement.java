@@ -21,11 +21,11 @@ public class Measurement {
     @JoinColumn(name = "device_id", insertable = false, updatable = false)
     private Device device;
 
-    private Float humidity; // Using Float to allow null values
-    private Float temperature; // Using Float to allow null values
-    private Float duration; // Using Float to allow null values
+    private Integer humidity;
+    private Integer temperature;
+    private Integer duration;
 
-    public Measurement(UUID id, LocalDateTime dateTime, Device device, Float humidity, Float temperature, Float duration) {
+    public Measurement(UUID id, LocalDateTime dateTime, Device device, Integer humidity, Integer temperature, Integer duration) {
         this.id = id;
         this.dateTime = dateTime;
         this.device = device;

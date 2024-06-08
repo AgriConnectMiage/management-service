@@ -26,6 +26,7 @@ public class Actuator extends Device {
     public Actuator(Farmer farmer) {
         super(farmer);
         this.field = null;
+        this.wateringEvent = null;
     }
 
     public Actuator() {
