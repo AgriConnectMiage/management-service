@@ -1,6 +1,8 @@
 package fr.miage.acm.managementservice.device.actuator;
 
 import fr.miage.acm.managementservice.device.DeviceState;
+import fr.miage.acm.managementservice.device.actuator.watering.scheduler.WateringSchedulerRepository;
+import fr.miage.acm.managementservice.device.actuator.watering.scheduler.WateringSchedulerService;
 import fr.miage.acm.managementservice.farmer.Farmer;
 import fr.miage.acm.managementservice.field.Field;
 import fr.miage.acm.managementservice.field.FieldRepository;
@@ -20,9 +22,12 @@ public class ActuatorService {
 
     private FieldRepository fieldRepository;
 
-    public ActuatorService(ActuatorRepository actuatorRepository, FieldRepository fieldRepository) {
+    private WateringSchedulerService wateringSchedulerService;
+
+    public ActuatorService(ActuatorRepository actuatorRepository, FieldRepository fieldRepository, WateringSchedulerService wateringSchedulerService) {
         this.actuatorRepository = actuatorRepository;
         this.fieldRepository = fieldRepository;
+        this.wateringSchedulerService = wateringSchedulerService;
     }
 
     public List<Actuator> findAll() {
@@ -33,9 +38,6 @@ public class ActuatorService {
         return actuatorRepository.save(actuator);
     }
 
-    public void delete(Actuator actuator) {
-        actuatorRepository.delete(actuator);
-    }
 
     public Optional<Actuator> findById(UUID id) {
         return actuatorRepository.findById(id);
@@ -51,6 +53,12 @@ public class ActuatorService {
     }
 
     @Transactional
+    public void removeActuator(Actuator actuator) {
+        wateringSchedulerService.deleteWateringSchedulerByActuator(actuator);
+        actuatorRepository.delete(actuator);
+    }
+
+    @Transactional
     public void removeActuatorsByFarmer(Farmer farmer) {
         actuatorRepository.deleteByFarmer(farmer);
     }
@@ -61,9 +69,11 @@ public class ActuatorService {
         return actuatorRepository.save(actuator);
     }
 
+    @Transactional
     public Actuator unassignActuatorFromField(Actuator actuator) {
         actuator.setField(null);
         actuator.setState(DeviceState.NOT_ASSIGNED);
+        wateringSchedulerService.deleteWateringSchedulerByActuator(actuator);
         return actuatorRepository.save(actuator);
     }
 

@@ -46,7 +46,7 @@ public class ActuatorController {
     @DeleteMapping("/{id}")
     public void deleteActuator(@PathVariable UUID id) {
         Optional<Actuator> actuator = actuatorService.findById(id);
-        actuator.ifPresent(actuatorService::delete);
+        actuator.ifPresent(actuatorService::removeActuator);
     }
 
     @PostMapping("/{id}/assign")
