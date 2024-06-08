@@ -11,8 +11,9 @@ import java.util.UUID;
 @RequestMapping("/farmers")
 public class FarmerController {
 
-    private FarmerService farmerService;
+    private final FarmerService farmerService;
 
+    @Autowired
     public FarmerController(FarmerService farmerService) {
         this.farmerService = farmerService;
     }
@@ -27,13 +28,33 @@ public class FarmerController {
         return farmerService.findById(id);
     }
 
+    @GetMapping("/email")
+    public Farmer getFarmerByEmail(@RequestParam String email) {
+        return farmerService.findByEmail(email);
+    }
+
     @PostMapping
-    public Farmer createFarmer(@RequestBody Farmer farmer) {
-        return farmerService.save(farmer);
+    public Farmer createFarmer(@RequestParam String firstName,
+                               @RequestParam String lastName,
+                               @RequestParam String email,
+                               @RequestParam String password,
+                               @RequestParam int fieldSize) {
+        return farmerService.createFarmer(firstName, lastName, email, password, fieldSize);
+    }
+
+    @PutMapping("/{id}/password")
+    public void updateFarmerPassword(@PathVariable UUID id, @RequestParam String password) {
+        farmerService.editPassword(id, password);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteFarmer(@PathVariable UUID id) {
+    public void deleteFarmerById(@PathVariable UUID id) {
         farmerService.deleteById(id);
+    }
+
+
+    @DeleteMapping("")
+    public void removeFarmer(@RequestBody Farmer farmer) {
+        farmerService.removeFarmer(farmer);
     }
 }

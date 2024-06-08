@@ -4,7 +4,6 @@ import fr.miage.acm.managementservice.device.DeviceState;
 import fr.miage.acm.managementservice.farmer.Farmer;
 import fr.miage.acm.managementservice.field.Field;
 import fr.miage.acm.managementservice.field.FieldRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +29,10 @@ public class SensorService {
 
     public Optional<Sensor> findById(UUID id) {
         return sensorRepository.findById(id);
+    }
+
+    public List<Sensor> findAllByIds(List<UUID> ids) {
+        return sensorRepository.findAllByIdIn(ids);
     }
 
     public List<Sensor> findByFarmer(Farmer farmer) {
@@ -71,7 +74,7 @@ public class SensorService {
         return sensorRepository.save(sensor);
     }
 
-    public Sensor cxhangeInterval(Sensor sensor, int interval) {
+    public Sensor changeInterval(Sensor sensor, int interval) {
         sensor.setInterval(interval);
         return sensorRepository.save(sensor);
     }

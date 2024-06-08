@@ -9,4 +9,7 @@ public interface SensorRepository extends JpaRepository<Sensor, UUID> {
     void deleteByFarmer(Farmer farmer);
 
     List<Sensor> findByFarmer(Farmer farmer);
+
+    // findAllByIds
+    List<Sensor> findAllByIdIn(List<UUID> ids);
 }
