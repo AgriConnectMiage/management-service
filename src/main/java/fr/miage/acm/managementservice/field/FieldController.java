@@ -1,5 +1,6 @@
 package fr.miage.acm.managementservice.field;
 
+import fr.miage.acm.managementservice.api.ApiField;
 import fr.miage.acm.managementservice.farmer.Farmer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +21,8 @@ public class FieldController {
     }
 
     @GetMapping
-    public List<Field> getAllFields() {
-        return fieldService.findAll();
+    public List<ApiField> getAllFields() {
+        return fieldService.findAll().stream().map(ApiField::new).toList();
     }
 
     @GetMapping("/{id}")

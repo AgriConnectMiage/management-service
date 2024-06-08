@@ -1,5 +1,6 @@
 package fr.miage.acm.managementservice.device.actuator;
 
+import fr.miage.acm.managementservice.api.ApiActuator;
 import fr.miage.acm.managementservice.device.DeviceState;
 import fr.miage.acm.managementservice.farmer.Farmer;
 import fr.miage.acm.managementservice.field.Field;
@@ -22,8 +23,8 @@ public class ActuatorController {
     }
 
     @GetMapping
-    public List<Actuator> getAllActuators() {
-        return actuatorService.findAll();
+    public List<ApiActuator> getAllActuators() {
+        return actuatorService.findAll().stream().map(ApiActuator::new).toList();
     }
 
     @GetMapping("/{id}")

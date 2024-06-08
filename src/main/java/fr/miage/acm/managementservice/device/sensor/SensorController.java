@@ -1,5 +1,6 @@
 package fr.miage.acm.managementservice.device.sensor;
 
+import fr.miage.acm.managementservice.api.ApiSensor;
 import fr.miage.acm.managementservice.device.DeviceState;
 import fr.miage.acm.managementservice.farmer.Farmer;
 import fr.miage.acm.managementservice.field.Field;
@@ -22,8 +23,10 @@ public class SensorController {
     }
 
     @GetMapping
-    public List<Sensor> getAllSensors() {
-        return sensorService.findAll();
+    public List<ApiSensor> getAllSensors() {
+        return sensorService.findAll().stream()
+                .map(ApiSensor::new)
+                .toList();
     }
 
     @GetMapping("/{id}")
