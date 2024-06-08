@@ -28,16 +28,16 @@ public class ManagementServiceApplication {
 //        fieldServiceTest.getFields();
 
 //        farmerServiceTest.removeFarmers();
-//        farmerServiceTest.createFarmers();
+        farmerServiceTest.createFarmers();
 //        farmerServiceTest.editPassword();
-//        sensorServiceTest.addSensor();
-//        actuatorServiceTest.addActuator();
-//        actuatorServiceTest.assignActuatorToField();
-//        sensorServiceTest.assignSensorToField();
-//        actuatorServiceTest.unassignActuatorToField();
-//        sensorServiceTest.unassignSensorToField();
-//        actuatorServiceTest.removeActuator();
-//        sensorServiceTest.removeSensor();
+        sensorServiceTest.addSensor();
+        actuatorServiceTest.addActuator();
+        actuatorServiceTest.assignActuatorToField();
+        sensorServiceTest.assignSensorToField();
+        actuatorServiceTest.unassignActuatorToField();
+        sensorServiceTest.unassignSensorToField();
+        actuatorServiceTest.removeActuator();
+        sensorServiceTest.removeSensor();
 //        actuatorServiceTest.changeActuatorState();
 //        sensorServiceTest.changeSensorState();
     }

@@ -1,9 +1,6 @@
 package fr.miage.acm.managementservice.device.actuator; 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,13 +16,17 @@ public class WateringScheduler {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
+    @OneToOne
+    @JoinColumn(name = "actuator_id", referencedColumnName = "id")
+    private Actuator actuator;
+
     private LocalDateTime beginDate;
     private LocalDateTime endDate;
     // Duration in seconds
     private float duration;
-    private float humidityThreshold;
+    private Integer humidityThreshold;
 
-    public WateringScheduler(LocalDateTime beginDate, LocalDateTime endDate, float humidityThreshold) {
+    public WateringScheduler(LocalDateTime beginDate, LocalDateTime endDate, Integer humidityThreshold) {
         this.beginDate = beginDate;
         this.endDate = endDate;
         this.duration = Timestamp.valueOf(endDate).getTime() - Timestamp.valueOf(beginDate).getTime();
@@ -38,7 +39,7 @@ public class WateringScheduler {
         this.endDate = endDate;
     }
 
-    public WateringScheduler(LocalDateTime beginDate, float duration, float humidityThreshold) {
+    public WateringScheduler(LocalDateTime beginDate, float duration, Integer humidityThreshold) {
         this.beginDate = beginDate;
         this.duration = duration;
         this.endDate = beginDate.plusSeconds((long) duration);
