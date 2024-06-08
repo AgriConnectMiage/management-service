@@ -1,5 +1,6 @@
 package fr.miage.acm.managementservice.farmer;
 
+import fr.miage.acm.managementservice.api.ApiFarmer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,18 +20,20 @@ public class FarmerController {
     }
 
     @GetMapping
-    public List<Farmer> getAllFarmers() {
-        return farmerService.findAll();
+    public List<ApiFarmer> getAllFarmers() {
+        return farmerService.findAll().stream()
+                .map(ApiFarmer::new)
+                .toList();
     }
 
     @GetMapping("/{id}")
-    public Optional<Farmer> getFarmerById(@PathVariable UUID id) {
-        return farmerService.findById(id);
+    public Optional<ApiFarmer> getFarmerById(@PathVariable UUID id) {
+        return farmerService.findById(id).map(ApiFarmer::new);
     }
 
     @GetMapping("/email")
-    public Farmer getFarmerByEmail(@RequestParam String email) {
-        return farmerService.findByEmail(email);
+    public ApiFarmer getFarmerByEmail(@RequestParam String email) {
+        return new ApiFarmer(farmerService.findByEmail(email));
     }
 
     @PostMapping
