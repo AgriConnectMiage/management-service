@@ -32,12 +32,12 @@ public class ManagementServiceApplication {
 //        farmerServiceTest.editPassword();
         sensorServiceTest.addSensor();
         actuatorServiceTest.addActuator();
-        actuatorServiceTest.assignActuatorToField();
-        sensorServiceTest.assignSensorToField();
-        actuatorServiceTest.unassignActuatorToField();
-        sensorServiceTest.unassignSensorToField();
-        actuatorServiceTest.removeActuator();
-        sensorServiceTest.removeSensor();
+//        actuatorServiceTest.assignActuatorToField();
+//        sensorServiceTest.assignSensorToField();
+//        actuatorServiceTest.unassignActuatorToField();
+//        sensorServiceTest.unassignSensorToField();
+//        actuatorServiceTest.removeActuator();
+//        sensorServiceTest.removeSensor();
 //        actuatorServiceTest.changeActuatorState();
 //        sensorServiceTest.changeSensorState();
     }
