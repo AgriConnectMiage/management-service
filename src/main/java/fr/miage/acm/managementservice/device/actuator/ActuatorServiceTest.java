@@ -50,7 +50,7 @@ public class ActuatorServiceTest {
         Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
         Actuator actuator = actuatorService.findByFarmer(farmer).get(0);
         System.out.println(actuator);
-        actuatorService.delete(actuator);
+        actuatorService.removeActuator(actuator);
     }
 
     public void changeActuatorState() {
