@@ -36,11 +36,27 @@ public class SensorServiceTest {
         sensorService.addSensor(farmer);
     }
 
+    public void addSensors(int number) {
+        Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
+        for (int i = 0; i < number; i++) {
+            sensorService.addSensor(farmer);
+        }
+    }
+
+
     public void assignSensorToField() {
         Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
         Field field = fieldService.findByFarmer(farmer).get(0);
         Sensor sensor = sensorService.findByFarmer(farmer).get(0);
         sensorService.assignSensorToField(sensor, field);
+    }
+
+    // assign all sensors to the first field of the first farmer
+    public void assignAllSensorsToField() {
+        Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
+        Field field = fieldService.findByFarmer(farmer).get(0);
+        List<Sensor> sensors = sensorService.findByFarmer(farmer);
+        sensors.forEach(sensor -> sensorService.assignSensorToField(sensor, field));
     }
 
     public void unassignSensorToField() {
@@ -56,11 +72,19 @@ public class SensorServiceTest {
         sensorService.delete(sensor);
     }
 
-    public void changeSensorState() {
+    public void changeSensorState(DeviceState state) {
         Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
         Sensor sensor = sensorService.findByFarmer(farmer).get(0);
-        sensorService.changeState(sensor, sensor.getState().equals(DeviceState.ON) ? DeviceState.OFF : DeviceState.ON);
+        sensorService.changeState(sensor, state);
         sensorService.save(sensor);
+    }
+
+    public void changeAllSensorsState(DeviceState state) {
+        List<Sensor> sensors = sensorService.findAll();
+        sensors.forEach(sensor -> {
+            sensorService.changeState(sensor, state);
+            sensorService.save(sensor);
+        });
     }
 
 }

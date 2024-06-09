@@ -53,10 +53,10 @@ public class ActuatorServiceTest {
         actuatorService.removeActuator(actuator);
     }
 
-    public void changeActuatorState() {
+    public void changeActuatorState(DeviceState state) {
         Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
         Actuator actuator = actuatorService.findByFarmer(farmer).get(0);
-        actuatorService.changeState(actuator, actuator.getState().equals(DeviceState.ON) ? DeviceState.OFF : DeviceState.ON);
+        actuatorService.changeState(actuator, state);
         actuatorService.save(actuator);
     }
 }

@@ -1,6 +1,7 @@
 package fr.miage.acm.managementservice.device.sensor;
 
 import fr.miage.acm.managementservice.device.DeviceState;
+import fr.miage.acm.managementservice.device.measurement.MeasurementService;
 import fr.miage.acm.managementservice.farmer.Farmer;
 import fr.miage.acm.managementservice.field.Field;
 import fr.miage.acm.managementservice.field.FieldRepository;
@@ -18,9 +19,12 @@ public class SensorService {
 
     private FieldRepository fieldRepository;
 
-    public SensorService(SensorRepository sensorRepository, FieldRepository fieldRepository) {
+    private final MeasurementService measurementService;
+
+    public SensorService(SensorRepository sensorRepository, FieldRepository fieldRepository, MeasurementService measurementService) {
         this.sensorRepository = sensorRepository;
         this.fieldRepository = fieldRepository;
+        this.measurementService = measurementService;
     }
 
     public List<Sensor> findAll() {
@@ -59,18 +63,25 @@ public class SensorService {
 
     public Sensor assignSensorToField(Sensor sensor, Field field) {
         sensor.setField(field);
-        sensor.setState(DeviceState.OFF);
+        this.changeState(sensor, DeviceState.OFF);
         return sensorRepository.save(sensor);
     }
 
     public Sensor unassignSensorFromField(Sensor sensor) {
         sensor.setField(null);
-        sensor.setState(DeviceState.NOT_ASSIGNED);
+        this.changeState(sensor, DeviceState.NOT_ASSIGNED);
         return sensorRepository.save(sensor);
     }
 
-    public Sensor changeState(Sensor sensor, DeviceState state) {
-        sensor.setState(state);
+    public Sensor changeState(Sensor sensor, DeviceState newState) {
+        if (newState == DeviceState.ON && sensor.getState() == DeviceState.OFF) {
+            measurementService.scheduleSensorTask(sensor.getId());
+        }
+        if (newState == DeviceState.OFF && sensor.getState() == DeviceState.ON) {
+            measurementService.unscheduleSensorTask(sensor.getId());
+        }
+        sensor.setState(newState);
+
         return sensorRepository.save(sensor);
     }
 

@@ -1,5 +1,6 @@
-package fr.miage.acm.managementservice.device;
+package fr.miage.acm.managementservice.device.measurement;
 
+import fr.miage.acm.managementservice.device.Device;
 import lombok.Getter;
 import lombok.Setter;
 import jakarta.persistence.*;
@@ -21,11 +22,14 @@ public class Measurement {
     @JoinColumn(name = "device_id", insertable = false, updatable = false)
     private Device device;
 
-    private Integer humidity;
-    private Integer temperature;
-    private Integer duration;
+    @Column(columnDefinition = "NUMERIC(5,1)")
+    private Float humidity;
+    @Column(columnDefinition = "NUMERIC(5,1)")
+    private Float temperature;
+    @Column(columnDefinition = "NUMERIC(5,1)")
+    private Float duration;
 
-    public Measurement(UUID id, LocalDateTime dateTime, Device device, Integer humidity, Integer temperature, Integer duration) {
+    public Measurement(UUID id, LocalDateTime dateTime, Device device, Float humidity, Float temperature, Float duration) {
         this.id = id;
         this.dateTime = dateTime;
         this.device = device;
