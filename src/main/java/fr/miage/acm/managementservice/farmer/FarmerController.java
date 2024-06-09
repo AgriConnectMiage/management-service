@@ -1,6 +1,7 @@
 package fr.miage.acm.managementservice.farmer;
 
 import fr.miage.acm.managementservice.api.ApiFarmer;
+import fr.miage.acm.managementservice.form.FarmerBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,12 +38,8 @@ public class FarmerController {
     }
 
     @PostMapping
-    public Farmer createFarmer(@RequestParam String firstName,
-                               @RequestParam String lastName,
-                               @RequestParam String email,
-                               @RequestParam String password,
-                               @RequestParam int fieldSize) {
-        return farmerService.createFarmer(firstName, lastName, email, password, fieldSize);
+    public Farmer createFarmer(@RequestBody FarmerBody farmerBody) {
+        return farmerService.createFarmer(farmerBody.firstName, farmerBody.lastName, farmerBody.email, farmerBody.password, farmerBody.fieldSize);
     }
 
     @PutMapping("/{id}/password")
