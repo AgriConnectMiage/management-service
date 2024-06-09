@@ -1,6 +1,5 @@
 package fr.miage.acm.managementservice.api;
 
-import fr.miage.acm.managementservice.farmer.Farmer;
 import fr.miage.acm.managementservice.field.Field;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,4 +21,19 @@ public class ApiField {
         this.ycoord = field.getYcoord();
         this.farmer = new ApiFarmer(field.getFarmer());
     }
+
+    public String getCoord() {
+        return xcoord + "," + ycoord;
+    }
+
+    public ApiField() {
+    }
+
+    public ApiField(UUID id, Integer xcoord, Integer ycoord, ApiFarmer farmer) {
+        this.id = id;
+        this.xcoord = xcoord;
+        this.ycoord = ycoord;
+        this.farmer = farmer;
+    }
+
 }
