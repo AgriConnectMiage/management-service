@@ -11,6 +11,8 @@ import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @Entity
@@ -22,17 +24,20 @@ public class Sensor extends Device {
     @JoinColumn(name = "field_id")
     private Field field;
     @Column(columnDefinition = "NUMERIC(5,1)")
-    private Float currentTemperature;
+    private Float lastTemperatureMeasured;
     @Column(columnDefinition = "NUMERIC(5,1)")
-    private Float currentHumidity;
+    private Float lastHumidityMeasured;
+
+    LocalDateTime lastMeasurementTime;
 
 
     public Sensor(Farmer farmer) {
         super(farmer);
         this.interval = 5;
         this.field = null;
-        this.currentTemperature = null;
-        this.currentHumidity = null;
+        this.lastTemperatureMeasured = null;
+        this.lastHumidityMeasured = null;
+        this.lastMeasurementTime = null;
     }
 
     public Sensor() {
@@ -46,8 +51,8 @@ public class Sensor extends Device {
                 ", state=" + getState() +
                 ", farmer=" + getFarmer() +
                 ", field=" + getField() +
-                ", currentTemperature=" + getCurrentTemperature() +
-                ", currentHumidity=" + getCurrentHumidity() +
+                ", lastTemperatureMeasured=" + getLastTemperatureMeasured() +
+                ", lastHumidityMeasured=" + getLastHumidityMeasured() +
                 '}';
     }
 
