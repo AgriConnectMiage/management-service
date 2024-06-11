@@ -5,7 +5,9 @@ import fr.miage.acm.managementservice.device.DeviceState;
 import fr.miage.acm.managementservice.device.actuator.ActuatorServiceTest;
 import fr.miage.acm.managementservice.device.measurement.MeasurementServiceTest;
 import fr.miage.acm.managementservice.device.sensor.SensorServiceTest;
+import fr.miage.acm.managementservice.farmer.Farmer;
 import fr.miage.acm.managementservice.farmer.FarmerServiceTest;
+import fr.miage.acm.managementservice.field.Field;
 import fr.miage.acm.managementservice.field.FieldServiceTest;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -31,23 +33,28 @@ public class ManagementServiceApplication {
 //        fieldServiceTest.getFields();
 
 //        farmerServiceTest.removeFarmers();
-        farmerServiceTest.createFarmers();
+        farmerServiceTest.createFarmer();
+
+        Farmer farmer = farmerServiceTest.getFarmer();
+        Field field = fieldServiceTest.getFieldOfFarmer(farmer);
+
+//        farmerServiceTest.createFarmers();
 //        farmerServiceTest.editPassword();
-//        sensorServiceTest.addSensor();
+        sensorServiceTest.addSensor(farmer);
 //        sensorServiceTest.addSensors(1);
-//        actuatorServiceTest.addActuator();
-        actuatorServiceTest.addActuators(5);
-        actuatorServiceTest.assignActuatorsToFields(5);
-//        actuatorServiceTest.assignActuatorToField();
-//        sensorServiceTest.assignSensorToField();
+        actuatorServiceTest.addActuator(farmer);
+//        actuatorServiceTest.addActuators(5);
+        actuatorServiceTest.assignActuatorToField(farmer, field);
+//        actuatorServiceTest.assignActuatorsToFields(5);
+        sensorServiceTest.assignSensorToField(farmer, field);
 //        sensorServiceTest.assignAllSensorsToField();
 //        actuatorServiceTest.unassignActuatorToField();
 //        sensorServiceTest.unassignSensorToField();
 //        actuatorServiceTest.removeActuator();
 //        sensorServiceTest.removeSensor();
 //        actuatorServiceTest.changeActuatorState();
-//        sensorServiceTest.changeSensorState();
-//        sensorServiceTest.changeAllSensorsState(DeviceState.ON);
+//        sensorServiceTest.changeSensorState(DeviceState.ON);
+        sensorServiceTest.changeAllSensorsState(DeviceState.ON);
 
         // Delay 10 seconds
 //        try {

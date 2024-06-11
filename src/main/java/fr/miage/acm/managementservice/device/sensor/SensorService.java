@@ -74,15 +74,16 @@ public class SensorService {
     }
 
     public Sensor changeState(Sensor sensor, DeviceState newState) {
-        if (newState == DeviceState.ON && sensor.getState() == DeviceState.OFF) {
+        DeviceState oldState = sensor.getState();
+        sensor.setState(newState);
+        sensorRepository.save(sensor);
+        if (newState == DeviceState.ON && oldState == DeviceState.OFF) {
             measurementService.scheduleSensorTask(sensor.getId());
         }
-        if (newState == DeviceState.OFF && sensor.getState() == DeviceState.ON) {
+        if (newState == DeviceState.OFF && oldState == DeviceState.ON) {
             measurementService.unscheduleSensorTask(sensor.getId());
         }
-        sensor.setState(newState);
-
-        return sensorRepository.save(sensor);
+        return sensor;
     }
 
     public Sensor changeInterval(Sensor sensor, int interval) {

@@ -29,8 +29,7 @@ public class ActuatorServiceTest {
         actuatorService.findAll().forEach(actuator -> System.out.println(actuator.toString()));
     }
 
-    public void addActuator() {
-        Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
+    public void addActuator(Farmer farmer) {
         actuatorService.addActuator(farmer);
     }
 
@@ -41,9 +40,7 @@ public class ActuatorServiceTest {
         }
     }
 
-    public void assignActuatorToField() {
-        Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
-        Field field = fieldService.findByFarmer(farmer).get(0);
+    public void assignActuatorToField(Farmer farmer, Field field) {
         Actuator actuator = actuatorService.findByFarmer(farmer).get(0);
         actuatorService.assignActuatorToField(actuator, field);
     }

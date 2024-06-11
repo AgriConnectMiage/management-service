@@ -31,8 +31,7 @@ public class SensorServiceTest {
     }
 
 
-    public void addSensor() {
-        Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
+    public void addSensor(Farmer farmer) {
         sensorService.addSensor(farmer);
     }
 
@@ -44,9 +43,7 @@ public class SensorServiceTest {
     }
 
 
-    public void assignSensorToField() {
-        Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
-        Field field = fieldService.findByFarmer(farmer).get(0);
+    public void assignSensorToField(Farmer farmer, Field field) {
         Sensor sensor = sensorService.findByFarmer(farmer).get(0);
         sensorService.assignSensorToField(sensor, field);
     }
