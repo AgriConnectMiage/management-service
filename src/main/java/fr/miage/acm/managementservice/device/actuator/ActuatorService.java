@@ -66,7 +66,6 @@ public class ActuatorService {
     public Actuator assignActuatorToField(Actuator actuator, Field field) {
         actuator.setField(field);
         actuator.setState(DeviceState.OFF);
-        // change state instead
 
         return actuatorRepository.save(actuator);
     }

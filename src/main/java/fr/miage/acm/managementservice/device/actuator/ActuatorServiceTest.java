@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Component
 public class ActuatorServiceTest {
@@ -33,11 +34,29 @@ public class ActuatorServiceTest {
         actuatorService.addActuator(farmer);
     }
 
+    public void addActuators(int nbActuators) {
+        Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
+        for (int i = 0; i < nbActuators; i++) {
+            actuatorService.addActuator(farmer);
+        }
+    }
+
     public void assignActuatorToField() {
         Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
         Field field = fieldService.findByFarmer(farmer).get(0);
         Actuator actuator = actuatorService.findByFarmer(farmer).get(0);
         actuatorService.assignActuatorToField(actuator, field);
+    }
+
+    public void assignActuatorsToFields(int nbActuators) {
+        Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
+        List<Field> fields = fieldService.findByFarmer(farmer);
+        List<Actuator> actuators = actuatorService.findByFarmer(farmer);
+        for (int i = 0; i < nbActuators; i++) {
+            Field field = fields.get(i);
+            Actuator actuator = actuators.get(i);
+            actuatorService.assignActuatorToField(actuator, field);
+        }
     }
 
     public void unassignActuatorToField() {

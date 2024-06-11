@@ -31,11 +31,13 @@ public class ManagementServiceApplication {
 //        fieldServiceTest.getFields();
 
 //        farmerServiceTest.removeFarmers();
-//        farmerServiceTest.createFarmers();
+        farmerServiceTest.createFarmers();
 //        farmerServiceTest.editPassword();
 //        sensorServiceTest.addSensor();
 //        sensorServiceTest.addSensors(1);
 //        actuatorServiceTest.addActuator();
+        actuatorServiceTest.addActuators(5);
+        actuatorServiceTest.assignActuatorsToFields(5);
 //        actuatorServiceTest.assignActuatorToField();
 //        sensorServiceTest.assignSensorToField();
 //        sensorServiceTest.assignAllSensorsToField();
