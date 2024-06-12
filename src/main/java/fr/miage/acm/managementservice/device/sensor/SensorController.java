@@ -90,7 +90,7 @@ public class SensorController {
 
     @PostMapping("/interval")
     public void changeSensorsInterval(@RequestBody List<UUID> sensorIds, @RequestParam int interval) {
-        List<Sensor> sensors = sensorService.findAllByIds(sensorIds);
+        List<Sensor> sensors = sensorService.findAllByIdIn(sensorIds);
         sensorService.changeInterval(sensors, interval);
     }
 }

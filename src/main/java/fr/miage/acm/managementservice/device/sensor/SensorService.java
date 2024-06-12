@@ -39,8 +39,8 @@ public class SensorService {
         return sensorRepository.findById(id);
     }
 
-    public List<Sensor> findAllByIds(List<UUID> ids) {
-        return sensorRepository.findAllByIds(ids);
+    public List<Sensor> findAllByIdIn(List<UUID> ids) {
+        return sensorRepository.findAllByIdIn(ids);
     }
 
     public List<Sensor> findByFarmer(Farmer farmer) {
