@@ -1,6 +1,7 @@
 package fr.miage.acm.managementservice.device.sensor;
 
 import fr.miage.acm.managementservice.device.DeviceState;
+import fr.miage.acm.managementservice.device.measurement.MeasurementClient;
 import fr.miage.acm.managementservice.device.measurement.MeasurementService;
 import fr.miage.acm.managementservice.farmer.Farmer;
 import fr.miage.acm.managementservice.field.Field;
@@ -21,10 +22,13 @@ public class SensorService {
 
     private final MeasurementService measurementService;
 
-    public SensorService(SensorRepository sensorRepository, FieldRepository fieldRepository, MeasurementService measurementService) {
+    private final MeasurementClient measurementClient;
+
+    public SensorService(SensorRepository sensorRepository, FieldRepository fieldRepository, MeasurementService measurementService, MeasurementClient measurementClient) {
         this.sensorRepository = sensorRepository;
         this.fieldRepository = fieldRepository;
         this.measurementService = measurementService;
+        this.measurementClient = measurementClient;
     }
 
     public List<Sensor> findAll() {
@@ -36,7 +40,7 @@ public class SensorService {
     }
 
     public List<Sensor> findAllByIds(List<UUID> ids) {
-        return sensorRepository.findAllByIdIn(ids);
+        return sensorRepository.findAllByIds(ids);
     }
 
     public List<Sensor> findByFarmer(Farmer farmer) {
@@ -88,11 +92,16 @@ public class SensorService {
 
     public Sensor changeInterval(Sensor sensor, int interval) {
         sensor.setInterval(interval);
-        return sensorRepository.save(sensor);
+        sensorRepository.save(sensor);
+        measurementClient.changeSensorInterval(sensor.getId(), interval);
+        return sensor;
     }
 
     public void changeInterval(List<Sensor> sensors, int interval) {
-        sensors.forEach(sensor -> sensor.setInterval(interval));
-        sensorRepository.saveAll(sensors);
+        sensors.forEach( sensor -> {
+            sensor.setInterval(interval);
+            sensorRepository.save(sensor);
+            measurementClient.changeSensorInterval(sensor.getId(), interval);
+        });
     }
 }

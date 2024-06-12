@@ -25,7 +25,6 @@ public class ManagementServiceApplication {
         FieldServiceTest fieldServiceTest = context.getBean(FieldServiceTest.class);
         SensorServiceTest sensorServiceTest = context.getBean(SensorServiceTest.class);
         ActuatorServiceTest actuatorServiceTest = context.getBean(ActuatorServiceTest.class);
-        MeasurementServiceTest measurementServiceTest = context.getBean(MeasurementServiceTest.class);
 
 //        farmerServiceTest.getFarmers();
 //        sensorServiceTest.getSensors();
@@ -40,23 +39,31 @@ public class ManagementServiceApplication {
 
 //        farmerServiceTest.createFarmers();
 //        farmerServiceTest.editPassword();
-        sensorServiceTest.addSensor(farmer);
-//        sensorServiceTest.addSensors(1);
-        actuatorServiceTest.addActuator(farmer);
-//        actuatorServiceTest.addActuators(5);
-        actuatorServiceTest.assignActuatorToField(farmer, field);
-//        actuatorServiceTest.assignActuatorsToFields(5);
-        sensorServiceTest.assignSensorToField(farmer, field);
-//        sensorServiceTest.assignAllSensorsToField();
+//        sensorServiceTest.addSensor(farmer);
+        sensorServiceTest.addSensors(5);
+//        actuatorServiceTest.addActuator(farmer);
+        actuatorServiceTest.addActuators(5);
+//        actuatorServiceTest.assignActuatorToField(farmer, field);
+        actuatorServiceTest.assignActuatorsToFields(5);
+//        sensorServiceTest.assignSensorToField(farmer, field);
+        sensorServiceTest.assignAllSensorsToField(farmer, field);
 //        actuatorServiceTest.unassignActuatorToField();
 //        sensorServiceTest.unassignSensorToField();
 //        actuatorServiceTest.removeActuator();
 //        sensorServiceTest.removeSensor();
 //        actuatorServiceTest.changeActuatorState();
 //        sensorServiceTest.changeSensorState(DeviceState.ON);
-        sensorServiceTest.changeAllSensorsState(DeviceState.ON);
+//        sensorServiceTest.changeAllSensorsState(DeviceState.ON);
 
-        // Delay 10 seconds
+//         Delay 10 seconds
+//        try {
+//            Thread.sleep(10000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        sensorServiceTest.changeSensorInterval(1);
+//        sensorServiceTest.changeAllSensorsInterval(1);
+        //         Delay 10 seconds
 //        try {
 //            Thread.sleep(10000);
 //        } catch (InterruptedException e) {

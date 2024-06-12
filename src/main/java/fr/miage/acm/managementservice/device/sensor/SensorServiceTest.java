@@ -49,9 +49,7 @@ public class SensorServiceTest {
     }
 
     // assign all sensors to the first field of the first farmer
-    public void assignAllSensorsToField() {
-        Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
-        Field field = fieldService.findByFarmer(farmer).get(0);
+    public void assignAllSensorsToField(Farmer farmer, Field field) {
         List<Sensor> sensors = sensorService.findByFarmer(farmer);
         sensors.forEach(sensor -> sensorService.assignSensorToField(sensor, field));
     }
@@ -84,4 +82,17 @@ public class SensorServiceTest {
         });
     }
 
+    // change interval of the first sensor of the first farmer
+    public void changeSensorInterval(int interval) {
+        Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
+        Sensor sensor = sensorService.findByFarmer(farmer).get(0);
+        sensorService.changeInterval(sensor, interval);
+
+    }
+
+    // change interval of all sensors
+    public void changeAllSensorsInterval(int interval) {
+        List<Sensor> sensors = sensorService.findAll();
+        sensors.forEach(sensor -> sensorService.changeInterval(sensor, interval));
+    }
 }

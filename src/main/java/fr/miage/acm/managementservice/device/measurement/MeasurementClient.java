@@ -1,9 +1,7 @@
 package fr.miage.acm.managementservice.device.measurement;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -17,4 +15,7 @@ public interface MeasurementClient {
 
     @DeleteMapping("/measurements/sensor/{sensorId}/schedule")
     void unscheduleSensorTask(@PathVariable("sensorId") UUID sensorId);
+
+    @PutMapping("/measurements/sensor/{sensorId}/interval")
+    void changeSensorInterval(@PathVariable("sensorId") UUID sensorId, @RequestParam int interval);
 }
