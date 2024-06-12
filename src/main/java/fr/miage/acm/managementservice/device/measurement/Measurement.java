@@ -27,15 +27,15 @@ public class Measurement {
     @Column(columnDefinition = "NUMERIC(5,1)")
     private Float temperature;
     @Column(columnDefinition = "NUMERIC(5,1)")
-    private Float duration;
+    private Float wateringDuration;
 
-    public Measurement(UUID id, LocalDateTime dateTime, Device device, Float humidity, Float temperature, Float duration) {
+    public Measurement(UUID id, LocalDateTime dateTime, Device device, Float humidity, Float temperature, Float wateringDuration) {
         this.id = id;
         this.dateTime = dateTime;
         this.device = device;
         this.humidity = humidity;
         this.temperature = temperature;
-        this.duration = duration;
+        this.wateringDuration = wateringDuration;
     }
 
     public Measurement() {
@@ -50,7 +50,7 @@ public class Measurement {
                 ", source=" + device +
                 ", humidity=" + humidity +
                 ", temperature=" + temperature +
-                ", duration=" + duration +
+                ", duration=" + wateringDuration +
                 '}';
     }
 }
