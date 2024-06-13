@@ -26,6 +26,7 @@ public class ManagementServiceApplication {
         SensorServiceTest sensorServiceTest = context.getBean(SensorServiceTest.class);
         ActuatorServiceTest actuatorServiceTest = context.getBean(ActuatorServiceTest.class);
 
+
 //        farmerServiceTest.getFarmers();
 //        sensorServiceTest.getSensors();
 //        actuatorServiceTest.getActuators();
@@ -33,27 +34,28 @@ public class ManagementServiceApplication {
 
 //        farmerServiceTest.removeFarmers();
         farmerServiceTest.createFarmer();
-
         Farmer farmer = farmerServiceTest.getFarmer();
         Field field = fieldServiceTest.getFieldOfFarmer(farmer);
 
 //        farmerServiceTest.createFarmers();
 //        farmerServiceTest.editPassword();
-//        sensorServiceTest.addSensor(farmer);
-        sensorServiceTest.addSensors(5);
-//        actuatorServiceTest.addActuator(farmer);
-        actuatorServiceTest.addActuators(5);
-//        actuatorServiceTest.assignActuatorToField(farmer, field);
-        actuatorServiceTest.assignActuatorsToFields(5);
-//        sensorServiceTest.assignSensorToField(farmer, field);
-        sensorServiceTest.assignAllSensorsToField(farmer, field);
+        sensorServiceTest.addSensor(farmer);
+//        sensorServiceTest.addSensors(5);
+        actuatorServiceTest.addActuator(farmer);
+//        actuatorServiceTest.addActuators(5);
+        actuatorServiceTest.assignActuatorToField(farmer, field);
+//        actuatorServiceTest.assignActuatorsToFields(5);
+        sensorServiceTest.assignSensorToField(farmer, field);
+
+        sensorServiceTest.setLastTemperatureAndHumidity(30, 75);
+//        sensorServiceTest.assignAllSensorsToField(farmer, field);
 //        actuatorServiceTest.unassignActuatorToField();
 //        sensorServiceTest.unassignSensorToField();
 //        actuatorServiceTest.removeActuator();
 //        sensorServiceTest.removeSensor();
 //        actuatorServiceTest.changeActuatorState();
 //        sensorServiceTest.changeSensorState(DeviceState.ON);
-//        sensorServiceTest.changeAllSensorsState(DeviceState.ON);
+        sensorServiceTest.changeAllSensorsState(DeviceState.ON);
 
 //         Delay 10 seconds
 //        try {

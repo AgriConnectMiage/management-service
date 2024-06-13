@@ -95,4 +95,15 @@ public class SensorServiceTest {
         List<Sensor> sensors = sensorService.findAll();
         sensors.forEach(sensor -> sensorService.changeInterval(sensor, interval));
     }
+
+    // set last temperature and humidity
+    public void setLastTemperatureAndHumidity(float temperature, float humidity) {
+        List<Sensor> sensors = sensorService.findAll();
+        sensors.forEach(sensor -> {
+            sensor.setLastTemperatureMeasured(temperature);
+            sensor.setLastHumidityMeasured(humidity);
+            sensorService.save(sensor);
+        });
+    }
+
 }

@@ -64,6 +64,9 @@ public class ActuatorService {
     }
 
     public Actuator assignActuatorToField(Actuator actuator, Field field) {
+        if(actuatorRepository.findByField(field).isPresent()) {
+            throw new IllegalArgumentException("Field already has an actuator assigned");
+        }
         actuator.setField(field);
         actuator.setState(DeviceState.OFF);
 

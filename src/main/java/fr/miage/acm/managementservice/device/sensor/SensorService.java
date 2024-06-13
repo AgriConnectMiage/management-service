@@ -66,7 +66,12 @@ public class SensorService {
     }
 
     public Sensor assignSensorToField(Sensor sensor, Field field) {
+        // check if field already has a sensor
+        if(sensorRepository.findByField(field).isPresent()) {
+            throw new IllegalArgumentException("Field already has a sensor");
+        }
         sensor.setField(field);
+
         this.changeState(sensor, DeviceState.OFF);
         return sensorRepository.save(sensor);
     }
