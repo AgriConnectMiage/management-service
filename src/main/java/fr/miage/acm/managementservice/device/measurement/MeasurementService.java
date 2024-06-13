@@ -1,5 +1,6 @@
 package fr.miage.acm.managementservice.device.measurement;
 
+import fr.miage.acm.managementservice.client.MeasurementServiceClient;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,11 +9,11 @@ import java.util.UUID;
 @Service
 public class MeasurementService {
 
-    MeasurementClient measurementClient;
+    MeasurementServiceClient measurementServiceClient;
     MeasurementRepository measurementRepository;
 
-    public MeasurementService(MeasurementClient measurementClient, MeasurementRepository measurementRepository) {
-        this.measurementClient = measurementClient;
+    public MeasurementService(MeasurementServiceClient measurementServiceClient, MeasurementRepository measurementRepository) {
+        this.measurementServiceClient = measurementServiceClient;
         this.measurementRepository = measurementRepository;
     }
 
@@ -21,10 +22,10 @@ public class MeasurementService {
     }
 
     public void scheduleSensorTask(UUID sensorId) {
-        measurementClient.scheduleSensorTask(sensorId);
+        measurementServiceClient.scheduleSensorTask(sensorId);
     }
 
     public void unscheduleSensorTask(UUID sensorId) {
-        measurementClient.unscheduleSensorTask(sensorId);
+        measurementServiceClient.unscheduleSensorTask(sensorId);
     }
 }

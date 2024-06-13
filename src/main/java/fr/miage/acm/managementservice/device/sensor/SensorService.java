@@ -1,7 +1,7 @@
 package fr.miage.acm.managementservice.device.sensor;
 
 import fr.miage.acm.managementservice.device.DeviceState;
-import fr.miage.acm.managementservice.device.measurement.MeasurementClient;
+import fr.miage.acm.managementservice.client.MeasurementServiceClient;
 import fr.miage.acm.managementservice.device.measurement.MeasurementService;
 import fr.miage.acm.managementservice.farmer.Farmer;
 import fr.miage.acm.managementservice.field.Field;
@@ -22,13 +22,13 @@ public class SensorService {
 
     private final MeasurementService measurementService;
 
-    private final MeasurementClient measurementClient;
+    private final MeasurementServiceClient measurementServiceClient;
 
-    public SensorService(SensorRepository sensorRepository, FieldRepository fieldRepository, MeasurementService measurementService, MeasurementClient measurementClient) {
+    public SensorService(SensorRepository sensorRepository, FieldRepository fieldRepository, MeasurementService measurementService, MeasurementServiceClient measurementServiceClient) {
         this.sensorRepository = sensorRepository;
         this.fieldRepository = fieldRepository;
         this.measurementService = measurementService;
-        this.measurementClient = measurementClient;
+        this.measurementServiceClient = measurementServiceClient;
     }
 
     public List<Sensor> findAll() {
@@ -67,7 +67,7 @@ public class SensorService {
 
     public Sensor assignSensorToField(Sensor sensor, Field field) {
         // check if field already has a sensor
-        if(sensorRepository.findByField(field).isPresent()) {
+        if (sensorRepository.findByField(field).isPresent()) {
             throw new IllegalArgumentException("Field already has a sensor");
         }
         sensor.setField(field);
@@ -87,7 +87,11 @@ public class SensorService {
         sensor.setState(newState);
         sensorRepository.save(sensor);
         if (newState == DeviceState.ON && oldState == DeviceState.OFF) {
-            measurementService.scheduleSensorTask(sensor.getId());
+            // TODO  remove this loop
+            for (int i = 0; i < 10; i++) {
+                System.out.println("Appel");
+                measurementService.scheduleSensorTask(sensor.getId());
+            }
         }
         if (newState == DeviceState.OFF && oldState == DeviceState.ON) {
             measurementService.unscheduleSensorTask(sensor.getId());
@@ -98,15 +102,15 @@ public class SensorService {
     public Sensor changeInterval(Sensor sensor, int interval) {
         sensor.setInterval(interval);
         sensorRepository.save(sensor);
-        measurementClient.changeSensorInterval(sensor.getId(), interval);
+        measurementServiceClient.changeSensorInterval(sensor.getId(), interval);
         return sensor;
     }
 
     public void changeInterval(List<Sensor> sensors, int interval) {
-        sensors.forEach( sensor -> {
+        sensors.forEach(sensor -> {
             sensor.setInterval(interval);
             sensorRepository.save(sensor);
-            measurementClient.changeSensorInterval(sensor.getId(), interval);
+            measurementServiceClient.changeSensorInterval(sensor.getId(), interval);
         });
     }
 }
