@@ -3,6 +3,7 @@ package fr.miage.acm.managementservice.device.sensor;
 import fr.miage.acm.managementservice.api.ApiSensor;
 import fr.miage.acm.managementservice.device.DeviceState;
 import fr.miage.acm.managementservice.farmer.Farmer;
+import fr.miage.acm.managementservice.farmer.FarmerRepository;
 import fr.miage.acm.managementservice.field.Field;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,10 +17,14 @@ import java.util.UUID;
 public class SensorController {
 
     private final SensorService sensorService;
+    private final FarmerRepository farmerRepository;
+    private final SensorRepository sensorRepository;
 
     @Autowired
-    public SensorController(SensorService sensorService) {
+    public SensorController(SensorService sensorService, FarmerRepository farmerRepository, SensorRepository sensorRepository) {
         this.sensorService = sensorService;
+        this.farmerRepository = farmerRepository;
+        this.sensorRepository = sensorRepository;
     }
 
     @GetMapping
@@ -30,15 +35,30 @@ public class SensorController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Sensor> getSensorById(@PathVariable UUID id) {
-        return sensorService.findById(id);
+    public ApiSensor getSensorById(@PathVariable UUID id) {
+        Optional<Sensor> optionalSensor = sensorService.findById(id);
+        // create ApiSensor from Sensor
+        if(optionalSensor.isPresent()) {
+            Sensor sensor = optionalSensor.get();
+            ApiSensor apiSensor = new ApiSensor(sensor);
+            System.out.println("apisensor envoyé :");
+            System.out.println(apiSensor);
+            return apiSensor;
+        }
+        return null;
     }
 
     @GetMapping("/farmer/{farmerId}")
-    public List<Sensor> getSensorsByFarmer(@PathVariable UUID farmerId) {
-        Farmer farmer = new Farmer();
-        farmer.setId(farmerId);
-        return sensorService.findByFarmer(farmer);
+    public List<ApiSensor> getSensorsByFarmer(@PathVariable UUID farmerId) {
+        Optional<Farmer> farmer = farmerRepository.findById(farmerId);
+        if (farmer.isPresent()) {
+            return sensorService.findByFarmer(farmer.get()).stream()
+                    .map(ApiSensor::new)
+                    .toList();
+        } else {
+            System.out.println("No farmer found for id " + farmerId);
+            return List.of();
+        }
     }
 
     @PostMapping
@@ -53,21 +73,19 @@ public class SensorController {
     }
 
     @PostMapping("/{id}/assign")
-    public Sensor assignSensorToField(@PathVariable UUID id, @RequestBody Field field) {
+    public void assignSensorToField(@PathVariable UUID id, @RequestBody Field field) {
         Optional<Sensor> sensor = sensorService.findById(id);
         if (sensor.isPresent()) {
-            return sensorService.assignSensorToField(sensor.get(), field);
+            sensorService.assignSensorToField(sensor.get(), field);
         }
-        return null;
     }
 
     @PostMapping("/{id}/unassign")
-    public Sensor unassignSensorFromField(@PathVariable UUID id) {
+    public void unassignSensorFromField(@PathVariable UUID id) {
         Optional<Sensor> sensor = sensorService.findById(id);
         if (sensor.isPresent()) {
-            return sensorService.unassignSensorFromField(sensor.get());
+            sensorService.unassignSensorFromField(sensor.get());
         }
-        return null;
     }
 
     @PostMapping("/{id}/state")
@@ -92,5 +110,11 @@ public class SensorController {
     public void changeSensorsInterval(@RequestBody List<UUID> sensorIds, @RequestParam int interval) {
         List<Sensor> sensors = sensorService.findAllByIdIn(sensorIds);
         sensorService.changeInterval(sensors, interval);
+    }
+
+    // update sensor temp, humidity, measure date
+    @PostMapping("/{id}/measure")
+    public void updateMeasures(@PathVariable UUID id, @RequestParam float temperature, @RequestParam float humidity) {
+        sensorService.updateMeasures(id, temperature, humidity);
     }
 }

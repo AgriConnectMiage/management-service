@@ -76,4 +76,17 @@ public class ActuatorController {
         }
         return null;
     }
+
+    // find by  field
+    @GetMapping("/field/{fieldId}")
+    public Optional<ApiActuator> findByField(@PathVariable UUID fieldId) {
+        Optional<Actuator> optionalActuator = actuatorService.findByField(fieldId);
+        if(optionalActuator.isPresent()) {
+            return Optional.of(new ApiActuator(optionalActuator.get()));
+        }
+        else{
+            System.out.println("Actuator not found");
+            return Optional.empty();
+        }
+    }
 }

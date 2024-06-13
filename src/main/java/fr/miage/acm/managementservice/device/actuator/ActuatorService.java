@@ -47,6 +47,10 @@ public class ActuatorService {
         return actuatorRepository.findByFarmer(farmer);
     }
 
+    public Optional<Actuator> findByField(UUID fieldId) {
+        return actuatorRepository.findByField(fieldRepository.findById(fieldId).orElseThrow());
+    }
+
     public Actuator addActuator(Farmer farmer) {
         Actuator actuator = new Actuator(farmer);
         return actuatorRepository.save(actuator);

@@ -1,5 +1,6 @@
 package fr.miage.acm.managementservice.api;
 
+import fr.miage.acm.managementservice.device.actuator.watering.scheduler.WateringScheduler;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -50,6 +51,15 @@ public class ApiWateringScheduler {
         this.duration = duration;
         this.endDate = beginDate.plusSeconds((long) duration);
         this.actuator = apiActuator;
+    }
+
+    public ApiWateringScheduler(WateringScheduler wateringScheduler) {
+        this.id = wateringScheduler.getId();
+        this.beginDate = wateringScheduler.getBeginDate();
+        this.endDate = wateringScheduler.getEndDate();
+        this.duration = wateringScheduler.getDuration();
+        this.humidityThreshold = wateringScheduler.getHumidityThreshold();
+        this.actuator = new ApiActuator(wateringScheduler.getActuator());
     }
 
     public ApiWateringScheduler() {

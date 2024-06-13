@@ -1,5 +1,6 @@
 package fr.miage.acm.managementservice.device.actuator.watering.scheduler;
 
+import fr.miage.acm.managementservice.api.ApiWateringScheduler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,8 +26,17 @@ public class WateringSchedulerController {
 
     // find by actuator
     @GetMapping
-    public Optional<WateringScheduler> findByActuator(@PathVariable UUID actuatorId) {
-        return wateringSchedulerService.findByActuator(actuatorId);
+    public ApiWateringScheduler findByActuator(@PathVariable UUID actuatorId) {
+        Optional<WateringScheduler> optionalWateringScheduler = wateringSchedulerService.findByActuator(actuatorId);
+        if (optionalWateringScheduler.isPresent()) {
+            WateringScheduler wateringScheduler = optionalWateringScheduler.get();
+            ApiWateringScheduler apiWateringScheduler = new ApiWateringScheduler(wateringScheduler);
+            return apiWateringScheduler;
+        }
+        else {
+            System.out.println("No watering scheduler found for actuator " + actuatorId);
+        }
+        return null;
     }
 
 }

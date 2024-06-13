@@ -33,11 +33,18 @@ public class ManagementServiceApplication {
 //        fieldServiceTest.getFields();
 
 //        farmerServiceTest.removeFarmers();
+
 //        farmerServiceTest.createFarmer();
 //        Farmer farmer = farmerServiceTest.getFarmer();
 //        Field field = fieldServiceTest.getFieldOfFarmer(farmer);
+//        sensorServiceTest.addSensor(farmer);
+//        sensorServiceTest.assignSensorToField(farmer, field);
 
-        farmerServiceTest.createFarmers();
+
+        sensorServiceTest.changeSensorState(DeviceState.ON);
+
+
+//        farmerServiceTest.createFarmers();
 //        farmerServiceTest.editPassword();
 //        sensorServiceTest.addSensor(farmer);
 //        sensorServiceTest.addSensors(5);
@@ -46,7 +53,6 @@ public class ManagementServiceApplication {
 //        actuatorServiceTest.assignActuatorToField(farmer, field);
 //        actuatorServiceTest.assignActuatorsToFields(5);
 //        sensorServiceTest.assignSensorToField(farmer, field);
-
 //        sensorServiceTest.setLastTemperatureAndHumidity(30, 75);
 //        sensorServiceTest.assignAllSensorsToField(farmer, field);
 //        actuatorServiceTest.unassignActuatorToField();
@@ -54,7 +60,9 @@ public class ManagementServiceApplication {
 //        actuatorServiceTest.removeActuator();
 //        sensorServiceTest.removeSensor();
 //        actuatorServiceTest.changeActuatorState();
+
 //        sensorServiceTest.changeSensorState(DeviceState.ON);
+
 //        sensorServiceTest.changeAllSensorsState(DeviceState.OFF);
 //        sensorServiceTest.changeAllSensorsState(DeviceState.ON);
 

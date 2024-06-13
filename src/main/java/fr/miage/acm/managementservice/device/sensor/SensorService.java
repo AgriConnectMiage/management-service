@@ -9,6 +9,7 @@ import fr.miage.acm.managementservice.field.FieldRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -65,7 +66,7 @@ public class SensorService {
         sensorRepository.deleteByFarmer(farmer);
     }
 
-    public Sensor assignSensorToField(Sensor sensor, Field field) {
+    public void assignSensorToField(Sensor sensor, Field field) {
         // check if field already has a sensor
         if (sensorRepository.findByField(field).isPresent()) {
             throw new IllegalArgumentException("Field already has a sensor");
@@ -73,13 +74,15 @@ public class SensorService {
         sensor.setField(field);
 
         this.changeState(sensor, DeviceState.OFF);
-        return sensorRepository.save(sensor);
+        sensorRepository.save(sensor);
+
     }
 
-    public Sensor unassignSensorFromField(Sensor sensor) {
+    public void unassignSensorFromField(Sensor sensor) {
         sensor.setField(null);
         this.changeState(sensor, DeviceState.NOT_ASSIGNED);
-        return sensorRepository.save(sensor);
+        sensorRepository.save(sensor);
+
     }
 
     public Sensor changeState(Sensor sensor, DeviceState newState) {
@@ -87,11 +90,8 @@ public class SensorService {
         sensor.setState(newState);
         sensorRepository.save(sensor);
         if (newState == DeviceState.ON && oldState == DeviceState.OFF) {
-            // TODO  remove this loop
-            for (int i = 0; i < 10; i++) {
-                System.out.println("Appel");
-                measurementService.scheduleSensorTask(sensor.getId());
-            }
+            System.out.println("Scheduling sensor task");
+            measurementService.scheduleSensorTask(sensor.getId());
         }
         if (newState == DeviceState.OFF && oldState == DeviceState.ON) {
             measurementService.unscheduleSensorTask(sensor.getId());
@@ -112,5 +112,18 @@ public class SensorService {
             sensorRepository.save(sensor);
             measurementServiceClient.changeSensorInterval(sensor.getId(), interval);
         });
+    }
+
+    public void updateMeasures(UUID sensorId, float temperature, float humidity) {
+        Optional<Sensor> optionalSensor = sensorRepository.findById(sensorId);
+        if (optionalSensor.isPresent()) {
+            Sensor sensor = optionalSensor.get();
+            sensor.setLastTemperatureMeasured(temperature);
+            sensor.setLastHumidityMeasured(humidity);
+            sensor.setLastMeasurementTime(LocalDateTime.now());
+            sensorRepository.save(sensor);
+        } else {
+            throw new IllegalArgumentException("Sensor not found");
+        }
     }
 }
