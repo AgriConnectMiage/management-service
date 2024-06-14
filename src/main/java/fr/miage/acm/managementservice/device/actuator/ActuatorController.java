@@ -22,23 +22,6 @@ public class ActuatorController {
         this.actuatorService = actuatorService;
     }
 
-    @GetMapping
-    public List<ApiActuator> getAllActuators() {
-        return actuatorService.findAll().stream().map(ApiActuator::new).toList();
-    }
-
-    @GetMapping("/{id}")
-    public Optional<Actuator> getActuatorById(@PathVariable UUID id) {
-        return actuatorService.findById(id);
-    }
-
-    @GetMapping("/farmer/{farmerId}")
-    public List<Actuator> getActuatorsByFarmer(@PathVariable UUID farmerId) {
-        Farmer farmer = new Farmer();
-        farmer.setId(farmerId);
-        return actuatorService.findByFarmer(farmer);
-    }
-
     @PostMapping
     public Actuator createActuator(@RequestParam UUID farmerId) {
         return actuatorService.addActuator(farmerId);

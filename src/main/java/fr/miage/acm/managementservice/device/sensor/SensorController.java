@@ -30,40 +30,6 @@ public class SensorController {
         this.fieldRepository = fieldRepository;
     }
 
-    @GetMapping
-    public List<ApiSensor> getAllSensors() {
-        return sensorService.findAll().stream()
-                .map(ApiSensor::new)
-                .toList();
-    }
-
-    @GetMapping("/{id}")
-    public ApiSensor getSensorById(@PathVariable UUID id) {
-        Optional<Sensor> optionalSensor = sensorService.findById(id);
-        // create ApiSensor from Sensor
-        if(optionalSensor.isPresent()) {
-            Sensor sensor = optionalSensor.get();
-            ApiSensor apiSensor = new ApiSensor(sensor);
-            System.out.println("apisensor envoyé :");
-            System.out.println(apiSensor);
-            return apiSensor;
-        }
-        return null;
-    }
-
-    @GetMapping("/farmer/{farmerId}")
-    public List<ApiSensor> getSensorsByFarmer(@PathVariable UUID farmerId) {
-        Optional<Farmer> farmer = farmerRepository.findById(farmerId);
-        if (farmer.isPresent()) {
-            return sensorService.findByFarmer(farmer.get()).stream()
-                    .map(ApiSensor::new)
-                    .toList();
-        } else {
-            System.out.println("No farmer found for id " + farmerId);
-            return List.of();
-        }
-    }
-
     @PostMapping
     public Sensor createSensor(@RequestParam UUID farmerId) {
         return sensorService.addSensor(farmerId);
