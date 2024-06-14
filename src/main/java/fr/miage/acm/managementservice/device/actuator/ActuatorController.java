@@ -85,7 +85,6 @@ public class ActuatorController {
             return Optional.of(new ApiActuator(optionalActuator.get()));
         }
         else{
-            System.out.println("Actuator not found");
             return Optional.empty();
         }
     }
