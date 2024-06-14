@@ -41,7 +41,7 @@ public class ManagementServiceApplication {
 //        sensorServiceTest.assignSensorToField(farmer, field);
 
 
-        sensorServiceTest.changeSensorState(DeviceState.ON);
+//        sensorServiceTest.changeSensorState(DeviceState.ON);
 
 
 //        farmerServiceTest.createFarmers();

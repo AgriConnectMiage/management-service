@@ -10,11 +10,8 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@Entity
 public class Measurement {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     private LocalDateTime dateTime;
@@ -23,11 +20,8 @@ public class Measurement {
     private String fieldCoord;
     private UUID deviceId;
 
-    @Column(columnDefinition = "NUMERIC(5,1)")
     private Float humidity;
-    @Column(columnDefinition = "NUMERIC(5,1)")
     private Float temperature;
-    @Column(columnDefinition = "NUMERIC(5,1)")
     private Float wateringDuration;
 
     public Measurement(UUID id, LocalDateTime dateTime, Device device, Float humidity, Float temperature, Float wateringDuration) {
