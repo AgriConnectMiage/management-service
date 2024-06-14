@@ -18,12 +18,6 @@ public class WateringSchedulerController {
     public WateringSchedulerController(WateringSchedulerService wateringSchedulerService) {
         this.wateringSchedulerService = wateringSchedulerService;
     }
-
-    @GetMapping("/{schedulerId}")
-    public String getWateringScheduler(@PathVariable Long actuatorId, @PathVariable Long schedulerId) {
-        return "Watering Scheduler " + schedulerId + " for Actuator " + actuatorId;
-    }
-
     // find by actuator
     @GetMapping
     public ApiWateringScheduler findByActuator(@PathVariable UUID actuatorId) {

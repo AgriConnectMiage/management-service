@@ -19,7 +19,12 @@ public class ApiActuator extends ApiDevice {
         super(new ApiFarmer(actuator.getFarmer()));
         this.id = actuator.getId();
         this.state = actuator.getState();
-        this.field = new ApiField(actuator.getField());
+        if(actuator.getField() != null){
+            this.field = new ApiField(actuator.getField());
+        }
+        else{
+            this.field = null;
+        }
     }
 
     public ApiActuator() {

@@ -20,16 +20,6 @@ public class FieldController {
         this.fieldService = fieldService;
     }
 
-    @GetMapping
-    public List<ApiField> getAllFields() {
-        return fieldService.findAll().stream().map(ApiField::new).toList();
-    }
-
-    @GetMapping("/{id}")
-    public Optional<Field> getFieldById(@PathVariable UUID id) {
-        return fieldService.findById(id);
-    }
-
     @GetMapping("/farmer/{farmerId}")
     public List<Field> getFieldsByFarmer(@PathVariable UUID farmerId) {
         Farmer farmer = new Farmer();
@@ -37,15 +27,4 @@ public class FieldController {
         return fieldService.findByFarmer(farmer);
     }
 
-    @PostMapping
-    public Field createField(@RequestBody Field field) {
-        return fieldService.save(field);
-    }
-
-    @DeleteMapping("/farmer/{farmerId}")
-    public void deleteFieldsByFarmer(@PathVariable UUID farmerId) {
-        Farmer farmer = new Farmer();
-        farmer.setId(farmerId);
-        fieldService.deleteFieldsByFarmer(farmer);
-    }
 }

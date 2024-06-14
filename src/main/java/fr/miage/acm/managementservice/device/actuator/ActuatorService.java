@@ -4,6 +4,7 @@ import fr.miage.acm.managementservice.device.DeviceState;
 import fr.miage.acm.managementservice.device.actuator.watering.scheduler.WateringSchedulerRepository;
 import fr.miage.acm.managementservice.device.actuator.watering.scheduler.WateringSchedulerService;
 import fr.miage.acm.managementservice.farmer.Farmer;
+import fr.miage.acm.managementservice.farmer.FarmerRepository;
 import fr.miage.acm.managementservice.field.Field;
 import fr.miage.acm.managementservice.field.FieldRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +19,18 @@ import java.util.UUID;
 @Service
 public class ActuatorService {
 
+    private final FarmerRepository farmerRepository;
     private ActuatorRepository actuatorRepository;
 
     private FieldRepository fieldRepository;
 
     private WateringSchedulerService wateringSchedulerService;
 
-    public ActuatorService(ActuatorRepository actuatorRepository, FieldRepository fieldRepository, WateringSchedulerService wateringSchedulerService) {
+    public ActuatorService(ActuatorRepository actuatorRepository, FieldRepository fieldRepository, WateringSchedulerService wateringSchedulerService, FarmerRepository farmerRepository) {
         this.actuatorRepository = actuatorRepository;
         this.fieldRepository = fieldRepository;
         this.wateringSchedulerService = wateringSchedulerService;
+        this.farmerRepository = farmerRepository;
     }
 
     public List<Actuator> findAll() {
@@ -51,7 +54,8 @@ public class ActuatorService {
         return actuatorRepository.findByField(fieldRepository.findById(fieldId).orElseThrow());
     }
 
-    public Actuator addActuator(Farmer farmer) {
+    public Actuator addActuator(UUID farmerId) {
+        Farmer farmer = farmerRepository.findById(farmerId).orElseThrow();
         Actuator actuator = new Actuator(farmer);
         return actuatorRepository.save(actuator);
     }
@@ -67,7 +71,12 @@ public class ActuatorService {
         actuatorRepository.deleteByFarmer(farmer);
     }
 
-    public Actuator assignActuatorToField(Actuator actuator, Field field) {
+    public Actuator assignActuatorToField(Actuator actuator, UUID fieldId) {
+        Optional<Field> optionalField = fieldRepository.findById(fieldId);
+        if(optionalField.isEmpty()) {
+            throw new IllegalArgumentException("Field not found");
+        }
+        Field field = optionalField.get();
         if(actuatorRepository.findByField(field).isPresent()) {
             throw new IllegalArgumentException("Field already has an actuator assigned");
         }

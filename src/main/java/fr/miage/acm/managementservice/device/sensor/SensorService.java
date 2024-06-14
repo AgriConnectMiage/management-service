@@ -4,6 +4,7 @@ import fr.miage.acm.managementservice.device.DeviceState;
 import fr.miage.acm.managementservice.client.MeasurementServiceClient;
 import fr.miage.acm.managementservice.device.measurement.MeasurementService;
 import fr.miage.acm.managementservice.farmer.Farmer;
+import fr.miage.acm.managementservice.farmer.FarmerRepository;
 import fr.miage.acm.managementservice.field.Field;
 import fr.miage.acm.managementservice.field.FieldRepository;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.util.UUID;
 @Service
 public class SensorService {
 
+    private final FarmerRepository farmerRepository;
     private SensorRepository sensorRepository;
 
     private FieldRepository fieldRepository;
@@ -25,11 +27,12 @@ public class SensorService {
 
     private final MeasurementServiceClient measurementServiceClient;
 
-    public SensorService(SensorRepository sensorRepository, FieldRepository fieldRepository, MeasurementService measurementService, MeasurementServiceClient measurementServiceClient) {
+    public SensorService(SensorRepository sensorRepository, FieldRepository fieldRepository, MeasurementService measurementService, MeasurementServiceClient measurementServiceClient, FarmerRepository farmerRepository) {
         this.sensorRepository = sensorRepository;
         this.fieldRepository = fieldRepository;
         this.measurementService = measurementService;
         this.measurementServiceClient = measurementServiceClient;
+        this.farmerRepository = farmerRepository;
     }
 
     public List<Sensor> findAll() {
@@ -56,7 +59,8 @@ public class SensorService {
         sensorRepository.delete(sensor);
     }
 
-    public Sensor addSensor(Farmer farmer) {
+    public Sensor addSensor(UUID farmerId) {
+        Farmer farmer = farmerRepository.findById(farmerId).orElseThrow();
         Sensor sensor = new Sensor(farmer);
         return sensorRepository.save(sensor);
     }

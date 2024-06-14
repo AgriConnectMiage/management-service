@@ -5,6 +5,7 @@ import fr.miage.acm.managementservice.device.DeviceState;
 import fr.miage.acm.managementservice.farmer.Farmer;
 import fr.miage.acm.managementservice.farmer.FarmerRepository;
 import fr.miage.acm.managementservice.field.Field;
+import fr.miage.acm.managementservice.field.FieldRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,12 +20,14 @@ public class SensorController {
     private final SensorService sensorService;
     private final FarmerRepository farmerRepository;
     private final SensorRepository sensorRepository;
+    private final FieldRepository fieldRepository;
 
     @Autowired
-    public SensorController(SensorService sensorService, FarmerRepository farmerRepository, SensorRepository sensorRepository) {
+    public SensorController(SensorService sensorService, FarmerRepository farmerRepository, SensorRepository sensorRepository, FieldRepository fieldRepository) {
         this.sensorService = sensorService;
         this.farmerRepository = farmerRepository;
         this.sensorRepository = sensorRepository;
+        this.fieldRepository = fieldRepository;
     }
 
     @GetMapping
@@ -62,8 +65,8 @@ public class SensorController {
     }
 
     @PostMapping
-    public Sensor createSensor(@RequestBody Farmer farmer) {
-        return sensorService.addSensor(farmer);
+    public Sensor createSensor(@RequestParam UUID farmerId) {
+        return sensorService.addSensor(farmerId);
     }
 
     @DeleteMapping("/{id}")
@@ -73,9 +76,14 @@ public class SensorController {
     }
 
     @PostMapping("/{id}/assign")
-    public void assignSensorToField(@PathVariable UUID id, @RequestBody Field field) {
+    public void assignSensorToField(@PathVariable UUID id, @RequestParam UUID fieldId) {
         Optional<Sensor> sensor = sensorService.findById(id);
         if (sensor.isPresent()) {
+            Optional<Field> optionalField = fieldRepository.findById(fieldId);
+            if (optionalField.isEmpty()) {
+                return;
+            }
+            Field field = optionalField.get();
             sensorService.assignSensorToField(sensor.get(), field);
         }
     }
@@ -104,12 +112,6 @@ public class SensorController {
             return sensorService.changeInterval(sensor.get(), interval);
         }
         return null;
-    }
-
-    @PostMapping("/interval")
-    public void changeSensorsInterval(@RequestBody List<UUID> sensorIds, @RequestParam int interval) {
-        List<Sensor> sensors = sensorService.findAllByIdIn(sensorIds);
-        sensorService.changeInterval(sensors, interval);
     }
 
     // update sensor temp, humidity, measure date

@@ -40,8 +40,8 @@ public class ActuatorController {
     }
 
     @PostMapping
-    public Actuator createActuator(@RequestBody Farmer farmer) {
-        return actuatorService.addActuator(farmer);
+    public Actuator createActuator(@RequestParam UUID farmerId) {
+        return actuatorService.addActuator(farmerId);
     }
 
     @DeleteMapping("/{id}")
@@ -51,10 +51,10 @@ public class ActuatorController {
     }
 
     @PostMapping("/{id}/assign")
-    public Actuator assignActuatorToField(@PathVariable UUID id, @RequestBody Field field) {
+    public Actuator assignActuatorToField(@PathVariable UUID id, @RequestParam UUID fieldId) {
         Optional<Actuator> actuator = actuatorService.findById(id);
         if (actuator.isPresent()) {
-            return actuatorService.assignActuatorToField(actuator.get(), field);
+            return actuatorService.assignActuatorToField(actuator.get(), fieldId);
         }
         return null;
     }

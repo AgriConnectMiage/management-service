@@ -32,13 +32,13 @@ public class SensorServiceTest {
 
 
     public void addSensor(Farmer farmer) {
-        sensorService.addSensor(farmer);
+        sensorService.addSensor(farmer.getId());
     }
 
     public void addSensors(int number) {
         Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
         for (int i = 0; i < number; i++) {
-            sensorService.addSensor(farmer);
+            sensorService.addSensor(farmer.getId());
         }
     }
 

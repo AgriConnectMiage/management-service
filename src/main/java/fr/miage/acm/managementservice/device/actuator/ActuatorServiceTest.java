@@ -30,19 +30,19 @@ public class ActuatorServiceTest {
     }
 
     public void addActuator(Farmer farmer) {
-        actuatorService.addActuator(farmer);
+        actuatorService.addActuator(farmer.getId());
     }
 
     public void addActuators(int nbActuators) {
         Farmer farmer = farmerService.findByEmail("johndoe@gmail.com");
         for (int i = 0; i < nbActuators; i++) {
-            actuatorService.addActuator(farmer);
+            actuatorService.addActuator(farmer.getId());
         }
     }
 
     public void assignActuatorToField(Farmer farmer, Field field) {
         Actuator actuator = actuatorService.findByFarmer(farmer).get(0);
-        actuatorService.assignActuatorToField(actuator, field);
+        actuatorService.assignActuatorToField(actuator, field.getId());
     }
 
     public void assignActuatorsToFields(int nbActuators) {
@@ -52,7 +52,7 @@ public class ActuatorServiceTest {
         for (int i = 0; i < nbActuators; i++) {
             Field field = fields.get(i);
             Actuator actuator = actuators.get(i);
-            actuatorService.assignActuatorToField(actuator, field);
+            actuatorService.assignActuatorToField(actuator, field.getId());
         }
     }
 
