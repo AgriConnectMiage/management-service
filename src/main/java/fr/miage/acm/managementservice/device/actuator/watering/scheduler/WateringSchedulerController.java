@@ -18,6 +18,7 @@ public class WateringSchedulerController {
     public WateringSchedulerController(WateringSchedulerService wateringSchedulerService) {
         this.wateringSchedulerService = wateringSchedulerService;
     }
+
     // find by actuator
     @GetMapping
     public ApiWateringScheduler findByActuator(@PathVariable UUID actuatorId) {
@@ -26,9 +27,6 @@ public class WateringSchedulerController {
             WateringScheduler wateringScheduler = optionalWateringScheduler.get();
             ApiWateringScheduler apiWateringScheduler = new ApiWateringScheduler(wateringScheduler);
             return apiWateringScheduler;
-        }
-        else {
-            System.out.println("No watering scheduler found for actuator " + actuatorId);
         }
         return null;
     }
