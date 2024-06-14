@@ -22,7 +22,6 @@ public class SensorController {
     private final SensorRepository sensorRepository;
     private final FieldRepository fieldRepository;
 
-    @Autowired
     public SensorController(SensorService sensorService, FarmerRepository farmerRepository, SensorRepository sensorRepository, FieldRepository fieldRepository) {
         this.sensorService = sensorService;
         this.farmerRepository = farmerRepository;
@@ -33,6 +32,11 @@ public class SensorController {
     @PostMapping
     public Sensor createSensor(@RequestParam UUID farmerId) {
         return sensorService.addSensor(farmerId);
+    }
+
+    @GetMapping
+    public List<Sensor> getAllSensors() {
+        return sensorService.findAll();
     }
 
     @DeleteMapping("/{id}")
