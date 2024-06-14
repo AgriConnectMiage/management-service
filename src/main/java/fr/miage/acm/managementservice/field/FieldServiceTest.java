@@ -1,5 +1,6 @@
 package fr.miage.acm.managementservice.field;
 
+import fr.miage.acm.managementservice.farmer.Farmer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,4 +15,9 @@ public class FieldServiceTest {
     public void getFields() {
         System.out.println("Fields: " + fieldService.findAll());
     }
+
+    public Field getFieldOfFarmer(Farmer farmer) {
+        return fieldService.findByFarmer(farmer).get(0);
+    }
+
 }

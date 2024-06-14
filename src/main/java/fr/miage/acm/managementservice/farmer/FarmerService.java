@@ -1,13 +1,9 @@
 package fr.miage.acm.managementservice.farmer;
 
-import fr.miage.acm.managementservice.device.DeviceState;
-import fr.miage.acm.managementservice.device.actuator.Actuator;
 import fr.miage.acm.managementservice.device.actuator.ActuatorService;
-import fr.miage.acm.managementservice.device.sensor.Sensor;
 import fr.miage.acm.managementservice.device.sensor.SensorService;
 import fr.miage.acm.managementservice.field.FieldService;
 import fr.miage.acm.managementservice.field.Field;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,8 +42,11 @@ public class FarmerService {
         return farmerRepository.save(farmer);
     }
 
-    public void deleteById(UUID id) {
-        farmerRepository.deleteById(id);
+    public void removeFarmerById(UUID id) {
+        Farmer farmer = farmerRepository.findById(id).orElse(null);
+        if (farmer != null) {
+            removeFarmer(farmer);
+        }
     }
 
     public void delete(Farmer farmer) {
@@ -57,11 +56,13 @@ public class FarmerService {
 
     public Farmer createFarmer(String firstName, String lastName, String email, String password, int fieldSize) {
         Farmer farmerSearch = findByEmail(email);
+        System.out.println(fieldSize);
         if (farmerSearch == null) {
             Farmer farmer = new Farmer(firstName, lastName, email, password, fieldSize);
             this.save(farmer);
             for (int i = 0; i < fieldSize; i++) {
                 for (int j = 0; j < fieldSize; j++) {
+                    System.out.println("Creating field " + i + " " + j);
                     Field field = new Field(i + 1, j + 1, farmer);
                     fieldService.save(field);
                 }

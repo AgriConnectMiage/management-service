@@ -4,31 +4,37 @@ import fr.miage.acm.managementservice.device.Device;
 import fr.miage.acm.managementservice.device.DeviceState;
 import fr.miage.acm.managementservice.farmer.Farmer;
 import fr.miage.acm.managementservice.field.Field;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Entity
 public class Sensor extends Device {
     // Interval between two measurements in seconds
-    private float interval;
+    private int interval;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "field_id")
     private Field field;
-    private Integer currentTemperature;
-    private Integer currentHumidity;
+    @Column(columnDefinition = "NUMERIC(5,1)")
+    private Float lastTemperatureMeasured;
+    @Column(columnDefinition = "NUMERIC(5,1)")
+    private Float lastHumidityMeasured;
+
+    LocalDateTime lastMeasurementTime;
+
 
     public Sensor(Farmer farmer) {
         super(farmer);
         this.interval = 5;
         this.field = null;
-        this.currentTemperature = null;
-        this.currentHumidity = null;
+        this.lastTemperatureMeasured = null;
+        this.lastHumidityMeasured = null;
+        this.lastMeasurementTime = null;
     }
 
     public Sensor() {
@@ -42,8 +48,8 @@ public class Sensor extends Device {
                 ", state=" + getState() +
                 ", farmer=" + getFarmer() +
                 ", field=" + getField() +
-                ", currentTemperature=" + getCurrentTemperature() +
-                ", currentHumidity=" + getCurrentHumidity() +
+                ", lastTemperatureMeasured=" + getLastTemperatureMeasured() +
+                ", lastHumidityMeasured=" + getLastHumidityMeasured() +
                 '}';
     }
 
@@ -58,7 +64,7 @@ public class Sensor extends Device {
         return;
     }
 
-    public void setInterval(float interval) {
+    public void setInterval(int interval) {
         if (interval <= 0) {
             throw new IllegalArgumentException("Interval must be positive");
         }

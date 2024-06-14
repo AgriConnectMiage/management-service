@@ -49,12 +49,7 @@ public class FarmerController {
 
     @DeleteMapping("/{id}")
     public void deleteFarmerById(@PathVariable UUID id) {
-        farmerService.deleteById(id);
+        farmerService.removeFarmerById(id);
     }
 
-
-    @DeleteMapping("")
-    public void removeFarmer(@RequestBody Farmer farmer) {
-        farmerService.removeFarmer(farmer);
-    }
 }
