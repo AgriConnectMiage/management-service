@@ -10,15 +10,9 @@ import java.util.UUID;
 public class MeasurementService {
 
     MeasurementServiceClient measurementServiceClient;
-    MeasurementRepository measurementRepository;
 
-    public MeasurementService(MeasurementServiceClient measurementServiceClient, MeasurementRepository measurementRepository) {
+    public MeasurementService(MeasurementServiceClient measurementServiceClient) {
         this.measurementServiceClient = measurementServiceClient;
-        this.measurementRepository = measurementRepository;
-    }
-
-    public List<Measurement> findAll() {
-        return measurementRepository.findAll();
     }
 
     public void scheduleSensorTask(UUID sensorId) {

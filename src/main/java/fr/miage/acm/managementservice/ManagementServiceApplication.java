@@ -3,7 +3,6 @@ package fr.miage.acm.managementservice;
 
 import fr.miage.acm.managementservice.device.DeviceState;
 import fr.miage.acm.managementservice.device.actuator.ActuatorServiceTest;
-import fr.miage.acm.managementservice.device.measurement.MeasurementServiceTest;
 import fr.miage.acm.managementservice.device.sensor.SensorServiceTest;
 import fr.miage.acm.managementservice.farmer.Farmer;
 import fr.miage.acm.managementservice.farmer.FarmerServiceTest;
