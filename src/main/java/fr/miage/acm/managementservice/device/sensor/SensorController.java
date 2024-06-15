@@ -76,24 +76,28 @@ public class SensorController {
     }
 
     @PostMapping("/{id}/assign")
-    public void assignSensorToField(@PathVariable UUID id, @RequestParam UUID fieldId) {
+    public Sensor assignSensorToField(@PathVariable UUID id, @RequestParam UUID fieldId) {
         Optional<Sensor> sensor = sensorService.findById(id);
         if (sensor.isPresent()) {
             Optional<Field> optionalField = fieldRepository.findById(fieldId);
             if (optionalField.isEmpty()) {
-                return;
+                return null;
             }
             Field field = optionalField.get();
             sensorService.assignSensorToField(sensor.get(), field);
+            return sensor.get();
         }
+        return null;
     }
 
     @PostMapping("/{id}/unassign")
-    public void unassignSensorFromField(@PathVariable UUID id) {
+    public Sensor unassignSensorFromField(@PathVariable UUID id) {
         Optional<Sensor> sensor = sensorService.findById(id);
         if (sensor.isPresent()) {
             sensorService.unassignSensorFromField(sensor.get());
+            return sensor.get();
         }
+        return null;
     }
 
     @PostMapping("/{id}/state")
