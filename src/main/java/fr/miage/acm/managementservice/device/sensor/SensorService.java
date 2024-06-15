@@ -106,7 +106,9 @@ public class SensorService {
     public Sensor changeInterval(Sensor sensor, int interval) {
         sensor.setInterval(interval);
         sensorRepository.save(sensor);
-        measurementServiceClient.changeSensorInterval(sensor.getId(), interval);
+        if (sensor.getState() == DeviceState.ON) {
+            measurementServiceClient.changeSensorInterval(sensor.getId(), interval);
+        }
         return sensor;
     }
 
